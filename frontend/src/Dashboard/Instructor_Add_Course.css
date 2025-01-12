@@ -1,0 +1,53 @@
+.instructor-page {
+    max-width: 1000px; /* Increase the width of the form */
+    margin: 20px auto;
+    padding: 30px; /* Add some padding for better spacing */
+    background-color: #111010;
+    border-radius: 8px;
+  }
+  
+  .instructor-page h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .instructor-page .form-group {
+    margin-bottom: 20px; /* Increased margin for better spacing */
+  }
+  
+  .instructor-page .form-group label {
+    font-size: 1rem;
+    margin-bottom: 10px;
+   
+  }
+  
+  .instructor-page .form-control {
+    width: 100%;
+    padding: 12px; /* Increase padding for larger input fields */
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .instructor-page .btn {
+    width: 100%;
+    padding: 12px; /* Increased padding for better button size */
+    font-size: 1.1rem; /* Increase font size for the button */
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .instructor-page .btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .instructor-page p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: green;
+  }
+  

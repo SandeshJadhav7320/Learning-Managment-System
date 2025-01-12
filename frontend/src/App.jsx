@@ -7,7 +7,11 @@ import Registration from './components/Registration';
 import StudentDashboard from './Dashboard/StudentDashboard';
 import Logout from './Dashboard/Logout';
 import AdminDashboard from './Dashboard/AdminDashboard';
-
+import Availabel_Courses from './Dashboard/Availabel_Courses';
+import InstructorDashboard from './Dashboard/InstructorDashboard';
+import Instructor_Home from './Dashboard/Instructor_Home';
+import Instructor_Add_Course from './Dashboard/Instructor_Add_Course';
+import Instructor_Logout from './Dashboard/Instructor_Logout';
 
 
 
@@ -21,6 +25,7 @@ const App = () => {
 
         {/* Student Routes (Wrapped in StudentDashboard) */}
         <Route path="/student-dashboard" element={<StudentDashboard />}>
+            <Route path="availabel_courses" element={<Availabel_Courses />} />
             <Route path="home" element={<Student_Home />} />
             <Route path="courses" element={<Student_Courses />} />
             <Route path="logout" element={<Logout />} />
@@ -32,6 +37,13 @@ const App = () => {
             <Route path="home" element={<Student_Home />} />
             <Route path="courses" element={<Student_Courses />} />
             <Route path="logout" element={<Logout />} />
+        </Route>
+ 
+           {/* Instructor Routes (Wrapped in InstructorDashboard) */}
+           <Route path="/instructor-dashboard" element={<InstructorDashboard />}>
+            <Route path="instructorhome" element={<Instructor_Home />} />
+            <Route path="addcourses" element={<Instructor_Add_Course />} />
+            <Route path="logout" element={<Instructor_Logout />} />
         </Route>
         
       </Routes>

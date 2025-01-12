@@ -1,0 +1,80 @@
+/* Base style for the courses page */
+.courses-page {
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  /* Title of the courses page */
+  .courses-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  /* Container to hold all the course cards */
+  .courses-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Styling each individual course card */
+  .course-card {
+    background-color: rgb(0, 0, 0);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+  
+  /* Hover effect for course card */
+  .course-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  /* Title of each course */
+  .course-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Description of the course */
+  .course-card p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Enroll button */
+  .enroll-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Enroll button hover effect */
+  .enroll-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Responsive design for mobile */
+  @media (max-width: 768px) {
+    .courses-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .course-card {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+  
