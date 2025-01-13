@@ -1,10 +1,10 @@
 /* Sidebar container */
 .sidebar {
-  width: 250px;
-  height: 100vh;
-  background-color: #2c3e50;
-  color: white;
-  padding-top: 20px;
+  width: 300px;
+  height: 200vh;
+  background-color: #000000;
+  color: rgb(208, 196, 196);
+  padding-top: 30px;
   position: fixed;
   left: 0;
   top: 0;
@@ -14,7 +14,8 @@
 /* Sidebar heading */
 .sidebar h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  font-size: 27px;
 }
 
 /* Sidebar navigation list */
@@ -32,7 +33,7 @@
 .sidebar ul li a {
   text-decoration: none;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   padding-left: 20px;
   display: block;
 }
@@ -98,4 +99,16 @@
   .sidebar ul li a {
     font-size: 18px;
   }
+}
+/* Highlight active link */
+.sidebar ul li a.active-link {
+  background-color: #00cec9;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+/* Add subtle animation to active link change */
+.sidebar ul li a.active-link {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

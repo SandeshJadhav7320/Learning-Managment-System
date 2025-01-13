@@ -1,81 +1,116 @@
 /* Ensure the body and html elements take up full height */
 html, body {
-    height: 100%;
-    margin: 0;
-  }
-  
-  /* Background with animated gradient that covers the full screen */
-  .registration-container {
-    background: linear-gradient(45deg, #ff6b6b, #f06595);
-    height: 100%;  /* Set to 100% to fill the entire body */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;  /* Ensure padding doesn't affect full height */
-  }
-  
-  /* Form container with slightly transparent background */
-  .registration-form-container {
-    background-color: rgba(255, 255, 255, 0.9);  /* Slightly transparent background */
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;  /* Max width for the form */
-    box-sizing: border-box;  /* Ensure padding doesn't affect width */
-  }
-  
-  /* Header for the form */
-  .registration-header {
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 28px;
-  }
-  
-  /* Form inputs */
-  .registration-form .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .registration-form .form-control {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  /* Button for submitting the form */
-  .registration-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #f06595;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  /* Error message styling */
-  .registration-error {
-    color: red;
-    text-align: center;
-  }
-  
-  /* Footer with a link to login */
-  .registration-footer {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .registration-footer a {
-    color: #f06595;
-    text-decoration: none;
-  }
-  
-  .registration-footer a:hover {
-    text-decoration: underline;
-  }
-  
+  height: 100%;
+  margin: 0;
+}
+
+/* Background with animated gradient that covers the full screen */
+.registration-container {
+
+  height: 100%; /* Set to 100% to fill the entire body */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box; /* Ensure padding doesn't affect full height */
+}
+
+/* Form container with slightly transparent background */
+.registration-form-container {
+  background-color:#1e2a47;  /* Slightly transparent background */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;  /* Max width for the form */
+  box-sizing: border-box;  /* Ensure padding doesn't affect width */
+}
+
+/* Header for the form */
+.registration-header {
+  color: #e0d0d0;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Styling for form inputs and labels */
+.registration-form .form-group {
+  margin-bottom: 20px;
+}
+
+/* Ensure consistent styling for labels */
+.registration-form label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+/* Form control styling (inputs and selects) */
+.registration-form .form-control,
+.registration-form select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px; /* Ensure consistent font size */
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Ensure the email field is also consistent with others */
+.registration-form input[type="email"],
+.registration-form input[type="text"],
+.registration-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  color: #333;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Button for submitting the form */
+.registration-form button {
+  width: 100%;
+  padding: 12px;
+
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.registration-form button:hover {
+  color: #333;
+}
+
+/* Error message styling */
+.registration-error {
+
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Footer with a link to login */
+.registration-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.registration-footer a {
+ 
+  text-decoration: none;
+}
+
+.registration-footer a:hover {
+  text-decoration: underline;
+}
