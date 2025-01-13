@@ -26,6 +26,7 @@ public class SecurityConnfig {
         return http.csrf().disable() // Disable CSRF for simplicity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/student/**").permitAll() // Allow all requests under /student/**
+                        .requestMatchers("/instructor/addCourse").permitAll()
                         .anyRequest().authenticated() // Restrict all other endpoints
                 )
                 .build();
@@ -37,7 +38,8 @@ public class SecurityConnfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/student/login")
+                registry.addMapping("/student/login");
+                registry.addMapping("/instructor/**")
                         .allowedOrigins("http://localhost:5173") // Restrict CORS to front-end
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");

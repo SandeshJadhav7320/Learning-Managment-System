@@ -6,7 +6,7 @@ import './Sidebar.css';
 const Instructor_Sidebar = () => {
   return (
     <div className="sidebar">
-
+        <h2>Instructor Dashboard</h2>
       <ul>
         <li><Link to="/instructor-dashboard/instructorhome">Home</Link></li>
         <li><Link to="/instructor-dashboard/addcourses">Add Courses</Link></li>
