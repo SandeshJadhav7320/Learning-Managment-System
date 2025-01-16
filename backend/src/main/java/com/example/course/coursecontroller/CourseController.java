@@ -2,12 +2,17 @@ package com.example.course.coursecontroller;
 
 import com.example.course.entity.Course;
 import com.example.course.service.CourseService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/instructor")
-@CrossOrigin(origins = "http://localhost:3000") // Adjust for your frontend URL
+@CrossOrigin(origins = "http://localhost:5173")
+ // Adjust for your frontend URL
 public class CourseController {
 
     @Autowired
@@ -22,6 +27,16 @@ public class CourseController {
             return new Response("Failed to add course", false, null);
         }
     }
+    
+    @GetMapping("/getCourses")
+    public ResponseEntity<List<Course>> getCourses() {
+        List<Course> courses = courseService.getAllCourses();
+        if (courses.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(courses);
+    }
+
 }
 
 class Response {

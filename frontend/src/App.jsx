@@ -5,13 +5,14 @@ import Student_Courses from './Dashboard/Student_Courses'; // Courses page for s
 import Login from './components/Login'; // Login page
 import Registration from './components/Registration';
 import StudentDashboard from './Dashboard/StudentDashboard';
-import Logout from './Dashboard/Logout';
+import Logout from './Dashboard/LogoutPage';
 import AdminDashboard from './Dashboard/AdminDashboard';
 import Availabel_Courses from './Dashboard/Availabel_Courses';
 import InstructorDashboard from './Dashboard/InstructorDashboard';
 import Instructor_Home from './Dashboard/Instructor_Home';
 import Instructor_Add_Course from './Dashboard/Instructor_Add_Course';
 import Instructor_Logout from './Dashboard/Instructor_Logout';
+import LogoutPage from './Dashboard/LogoutPage';
 
 
 
@@ -28,7 +29,7 @@ const App = () => {
             <Route path="availabel_courses" element={<Availabel_Courses />} />
             <Route path="home" element={<Student_Home />} />
             <Route path="courses" element={<Student_Courses />} />
-            <Route path="logout" element={<Logout />} />
+            <Route path="logout" element={<LogoutPage />} />
         </Route>
 
         {/* Admin Routes (Wrapped in AdminDashboard) */}

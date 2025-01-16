@@ -27,6 +27,7 @@ public class SecurityConnfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/student/**").permitAll() // Allow all requests under /student/**
                         .requestMatchers("/instructor/addCourse").permitAll()
+                        .requestMatchers("/instructor/getCourses").permitAll()
                         .anyRequest().authenticated() // Restrict all other endpoints
                 )
                 .build();

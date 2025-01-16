@@ -31,6 +31,8 @@ function Login() {
       console.log("Stored Name in LocalStorage:", localStorage.getItem("studentName")); 
         // Navigate to role-based dashboards
         if (role === "student") {
+          const studentId = response.data.studentid; // assuming your backend returns the student ID
+localStorage.setItem("studentid", studentId);
           navigate("/student-dashboard");
         } else if (role === "instructor") {
           navigate("/instructor-dashboard");
