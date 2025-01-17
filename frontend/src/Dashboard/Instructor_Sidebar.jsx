@@ -25,7 +25,7 @@ const Instructor_Sidebar = () => {
         </li>
         <li>
           <NavLink
-            to="/instructor-dashboard/availabel_courses"
+            to="/instructor-dashboard/instructorcourses"
             className={({ isActive }) => (isActive ? 'active-link' : '')}
           >
             Available Courses

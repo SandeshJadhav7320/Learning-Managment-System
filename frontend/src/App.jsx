@@ -13,6 +13,7 @@ import Instructor_Home from './Dashboard/Instructor_Home';
 import Instructor_Add_Course from './Dashboard/Instructor_Add_Course';
 import Instructor_Logout from './Dashboard/Instructor_Logout';
 import LogoutPage from './Dashboard/LogoutPage';
+import InstructorCourses from './Dashboard/InstructorCourses';
 
 
 
@@ -44,6 +45,7 @@ const App = () => {
            <Route path="/instructor-dashboard" element={<InstructorDashboard />}>
             <Route path="instructorhome" element={<Instructor_Home />} />
             <Route path="addcourses" element={<Instructor_Add_Course />} />
+            <Route path="instructorcourses" element={<InstructorCourses />} />
             <Route path="logout" element={<Instructor_Logout />} />
         </Route>
         

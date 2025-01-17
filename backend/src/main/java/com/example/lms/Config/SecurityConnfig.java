@@ -25,10 +25,11 @@ public class SecurityConnfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable() // Disable CSRF for simplicity
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/student/**").permitAll() // Allow all requests under /student/**
+                        .requestMatchers("/student/**").permitAll() // Allow all student endpoints
                         .requestMatchers("/instructor/addCourse").permitAll()
                         .requestMatchers("/instructor/getCourses").permitAll()
-                        .anyRequest().authenticated() // Restrict all other endpoints
+                        .requestMatchers("/instructor/deleteCourse/**").permitAll() // Allow dynamic paths
+                        .anyRequest().denyAll() // Deny all other requests
                 )
                 .build();
     }
@@ -39,9 +40,8 @@ public class SecurityConnfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/student/login");
-                registry.addMapping("/instructor/**")
-                        .allowedOrigins("http://localhost:5173") // Restrict CORS to front-end
+                registry.addMapping("/**") // Apply to all routes
+                        .allowedOrigins("http://localhost:5173") // Frontend origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
             }

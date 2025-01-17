@@ -22,17 +22,21 @@ function Login() {
       );
 
       console.log("API Response:", response.data); // Debug log
-    const { message, role, studentname } = response.data;
+      const { message, role, studentname, studentid, token } = response.data;
       
       if (message === "Email not exist") {
         alert("Email does not exist");
       } else if (message === "Login success") {
-        localStorage.setItem("studentName", studentname); // Store name
-      console.log("Stored Name in LocalStorage:", localStorage.getItem("studentName")); 
+        // Store token and other user data in localStorage
+        localStorage.setItem("token", token);
+        localStorage.setItem("studentName", studentname);
+        localStorage.setItem("studentid", studentid);
+
+        console.log("Stored Token in LocalStorage:", localStorage.getItem("token"));
+        console.log("Stored Name in LocalStorage:", localStorage.getItem("studentName")); 
+
         // Navigate to role-based dashboards
         if (role === "student") {
-          const studentId = response.data.studentid; // assuming your backend returns the student ID
-localStorage.setItem("studentid", studentId);
           navigate("/student-dashboard");
         } else if (role === "instructor") {
           navigate("/instructor-dashboard");
@@ -59,10 +63,6 @@ localStorage.setItem("studentid", studentId);
 
   return (
     <div>
-
-      
-
-      {/* Login container */}
       <div className="login-container">
         <div className="login-box">
           <h2 className="text-center">Welcome Back!</h2>

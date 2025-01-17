@@ -1,0 +1,62 @@
+/* InstructorCourses.css */
+
+.content {
+    padding: 20px;
+    overflow: auto; /* Ensure content area is scrollable if needed */
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .courses-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between cards */
+    justify-content: center; /* Center cards */
+    padding: 20px;
+  }
+  
+  .course-card {
+    background-color: #0d0d0d;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: calc(33% - 20px); /* 3 cards per row, minus gap */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .course-card:hover {
+    transform: scale(1.05); /* Hover effect */
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Make course cards stack in smaller screens */
+  @media screen and (max-width: 1024px) {
+    .course-card {
+      width: calc(50% - 20px); /* 2 cards per row on medium screens */
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .course-card {
+      width: 100%; /* 1 card per row on small screens */
+    }
+  }
+  

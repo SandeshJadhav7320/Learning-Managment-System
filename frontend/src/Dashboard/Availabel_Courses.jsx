@@ -17,7 +17,7 @@ const Availabel_Courses = () => {
         setCourses(data);
       } catch (error) {
         console.error('Error fetching courses:', error);
-        setMessage('Failed to load courses.');
+       
       } finally {
         setLoading(false);
       }

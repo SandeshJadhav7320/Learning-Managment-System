@@ -14,13 +14,21 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
+    // Add a new course
     public Course addCourse(Course course) {
         return courseRepository.save(course);
     }
-    
 
+    // Retrieve all courses
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
+    // Delete a course by ID
+    public void deleteCourse(Long courseId) {
+        if (!courseRepository.existsById(courseId)) {
+            throw new IllegalArgumentException("Course not found with ID: " + courseId);
+        }
+        courseRepository.deleteById(courseId);
+    }
 }
