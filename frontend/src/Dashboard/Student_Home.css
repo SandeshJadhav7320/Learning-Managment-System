@@ -1,48 +1,99 @@
+/* Base styling for the homepage */
 .homepage {
-  background: url('your-background-image.jpg') no-repeat center center fixed;
-  background-size: cover;
+  
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
   font-family: 'Arial', sans-serif;
   text-align: center;
+  animation: fadeInBackground 2s ease-in-out;
 }
 
-.welcome-message h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  animation: fadeIn 2s ease-out;
-}
-
-.welcome-message p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  animation: fadeIn 2s ease-out 0.5s;
-}
-
-.cta-buttons button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.cta-buttons button:hover {
-  background-color: #0056b3;
-}
-
-@keyframes fadeIn {
+@keyframes fadeInBackground {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Welcome message animations */
+.welcome-message h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  animation: slideInFromTop 1s ease-out;
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.welcome-message p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  animation: fadeInText 1.5s ease-out;
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Call-to-action buttons with animations */
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.animated-button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.animated-button:hover {
+  transform: scale(1.1);
+  background-color: #0056b3;
+  animation: bounce 0.5s ease-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .welcome-message h1 {
+    font-size: 2rem;
+  }
+
+  .animated-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
   }
 }

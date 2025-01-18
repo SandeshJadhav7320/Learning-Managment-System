@@ -3,7 +3,6 @@ import './Availabel_Courses.css'; // Import CSS for styling
 
 const Availabel_Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,7 +16,6 @@ const Availabel_Courses = () => {
         setCourses(data);
       } catch (error) {
         console.error('Error fetching courses:', error);
-       
       } finally {
         setLoading(false);
       }
@@ -33,21 +31,16 @@ const Availabel_Courses = () => {
   return (
     <div className="courses-page">
       <h1 className="courses-title">Available Courses</h1>
-      {message && <p>{message}</p>}
       <div className="courses-container">
-        {courses.length > 0 ? (
-          courses.map((course) => (
-            <div key={course.id} className="course-card">
-              <h2>{course.name}</h2>
-              <p>{course.description}</p>
-              <p><strong>Fee:</strong> ${course.fee}</p>
-              <p><strong>Duration:</strong> {course.duration}</p>
-              <button className="enroll-btn">Enroll Now</button>
-            </div>
-          ))
-        ) : (
-          <p>No courses available at the moment.</p>
-        )}
+        {courses.map((course) => (
+          <div key={course.id} className="course-card">
+            <h2>{course.name}</h2>
+            <p>{course.description}</p>
+            <p><strong>Fee:</strong> ${course.fee}</p>
+            <p><strong>Duration:</strong> {course.duration}</p>
+            <button className="enroll-btn">Enroll Now</button>
+          </div>
+        ))}
       </div>
     </div>
   );

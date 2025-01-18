@@ -1,62 +1,81 @@
-/* InstructorCourses.css */
-
+/* Ensure content area is scrollable */
 .content {
-    padding: 20px;
-    overflow: auto; /* Ensure content area is scrollable if needed */
-  }
-  
-  h1 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
-  .courses-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Space between cards */
-    justify-content: center; /* Center cards */
-    padding: 20px;
-  }
-  
+  padding: 20px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  height: 100vh; /* Ensure the container height is consistent */
+  box-sizing: border-box; /* Include padding in height calculation */
+}
+
+/* Hide the scrollbar for Chrome, Edge, and Safari */
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Internet Explorer and Edge */
+.content {
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Title styling */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Container for course cards */
+.courses-container {
+  display: flex;
+  flex-wrap: wrap; /* Wrap cards to the next line */
+  gap: 20px; /* Space between cards */
+  justify-content: center; /* Center-align cards horizontally */
+  padding: 20px;
+}
+
+/* Styling for individual course cards */
+.course-card {
+  background-color: #0d0d0d;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: calc(33.333% - 20px); /* 3 cards per row, minus the gap */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for course cards */
+.course-card:hover {
+  transform: scale(1.05);
+}
+
+/* Button styling */
+button {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive design for medium screens */
+@media screen and (max-width: 1024px) {
   .course-card {
-    background-color: #0d0d0d;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    width: calc(33% - 20px); /* 3 cards per row, minus gap */
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .course-card:hover {
-    transform: scale(1.05); /* Hover effect */
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #d32f2f;
-  }
-  
-  /* Make course cards stack in smaller screens */
-  @media screen and (max-width: 1024px) {
-    .course-card {
       width: calc(50% - 20px); /* 2 cards per row on medium screens */
-    }
   }
-  
-  @media screen and (max-width: 768px) {
-    .course-card {
+}
+
+/* Responsive design for small screens */
+@media screen and (max-width: 768px) {
+  .course-card {
       width: 100%; /* 1 card per row on small screens */
-    }
   }
-  
+}

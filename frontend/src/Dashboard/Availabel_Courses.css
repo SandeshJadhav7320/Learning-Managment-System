@@ -1,80 +1,117 @@
 /* Base style for the courses page */
 .courses-page {
-    padding: 20px;
-    min-height: 100vh;
-  }
-  
-  /* Title of the courses page */
-  .courses-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 30px;
-  }
-  
-  /* Container to hold all the course cards */
-  .courses-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  /* Styling each individual course card */
+  padding: 20px;
+  min-height: 100vh; /* Full height of the viewport */
+  overflow-y: auto; /* Enable vertical scrolling */
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.courses-page::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
+}
+
+/* Title of the courses page */
+.courses-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+/* Container to hold all the course cards */
+.courses-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards */
+  justify-content: center;
+}
+
+/* Styling each individual course card */
+.course-card {
+  background-color: #0d0d0d;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: calc(33.333% - 20px); /* 3 cards per row, minus the gap */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for course card */
+.course-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Title of each course */
+.course-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+/* Description of the course */
+.course-card p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Enroll button */
+.enroll-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Enroll button hover effect */
+.enroll-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Responsive design for desktops (three cards per row) */
+@media (min-width: 1025px) {
   .course-card {
-    background-color: rgb(0, 0, 0);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 280px;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s;
-    cursor: pointer;
+    width: calc(33.333% - 20px);
   }
-  
-  /* Hover effect for course card */
-  .course-card:hover {
-    transform: translateY(-10px);
+}
+
+/* Responsive design for tablets (two cards per row) */
+@media (max-width: 1024px) {
+  .course-card {
+    width: calc(50% - 20px); /* Two cards per row */
   }
-  
-  /* Title of each course */
-  .course-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+}
+
+/* Responsive design for small tablets and large phones */
+@media (max-width: 768px) {
+  .course-card {
+    width: calc(100% - 40px); /* Single card per row */
+    max-width: 400px; /* Keep a max-width */
+    margin: 0 auto; /* Center the card */
   }
-  
-  /* Description of the course */
-  .course-card p {
-    font-size: 1rem;
-    margin-bottom: 10px;
+
+  .courses-container {
+    gap: 10px; /* Reduce gap for smaller screens */
   }
-  
-  /* Enroll button */
+}
+
+/* Responsive design for very small devices (narrow phones) */
+@media (max-width: 480px) {
+  .course-card {
+    padding: 15px;
+    width: calc(100% - 30px); /* Slightly smaller padding for very small screens */
+  }
+
   .enroll-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 0.9rem;
+    padding: 8px 15px; /* Smaller button for small screens */
   }
-  
-  /* Enroll button hover effect */
-  .enroll-btn:hover {
-    background-color: #2980b9;
+
+  .courses-title {
+    font-size: 1.5rem; /* Adjust title size */
   }
-  
-  /* Responsive design for mobile */
-  @media (max-width: 768px) {
-    .courses-container {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .course-card {
-      width: 100%;
-      max-width: 400px;
-    }
-  }
-  
+}
