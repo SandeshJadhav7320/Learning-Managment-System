@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.example.lms.Entity.Student;
 
 @Repository
-public interface StudentRepo extends JpaRepository<Student, Integer> {
+public interface StudentRepo extends JpaRepository<Student, Long> {
     
     // Find a student by email and password (with Optional for null safety)
     Optional<Student> findOneByEmailAndPassword(String email, String password);
