@@ -74,6 +74,7 @@ function Registration() {
           <div className="form-group">
             <label>Role</label>
             <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="">Select the user</option>
               <option value="student">Student</option>
               <option value="instructor">Instructor</option>
               <option value="admin">Admin</option>
