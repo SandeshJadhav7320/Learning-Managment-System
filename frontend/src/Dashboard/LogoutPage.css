@@ -1,0 +1,87 @@
+/* LogoutPage.css */
+
+/* Main container */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+  }
+  
+  /* Square profile box styles */
+  .profile-box {
+    width: 350px;  /* Set the width */
+    height: 350px;  /* Set the height equal to width to make it square */
+    background-color: #171717; /* Dark background for the box */
+    border-radius: 15px;  /* Slight rounded corners */
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #151719, #0e1011); /* Light gradient background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* Center the content */
+    align-items: center;
+    box-shadow: 0 10px 50px rgba(188, 80, 80, 0.7), 0 0 60px rgba(173, 57, 57, 0.4); /* Darker shadow with a stronger glow */
+  }
+  
+  /* Profile image styling */
+  .profile-img {
+    width: 100px;  /* Smaller image size for the square box */
+    height: 100px;  /* Square image */
+    border-radius: 50%;
+    border: 4px solid #d3dbe2; /* Light border around the image */
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0e9e9; /* Light background color for the circle */
+  }
+  
+  /* FontAwesome icon inside profile image circle */
+  .profile-img i {
+    font-size: 40px;  /* Size of the user icon */
+    color: #171717;  /* Color of the icon */
+  }
+  
+  /* Heading */
+  .profile-heading {
+    font-size: 22px;
+    font-weight: 600;
+    color: #e3d6d6;
+    margin-bottom: 15px;
+  }
+  
+  /* Details text */
+  .profile-detail {
+    font-size: 16px;
+    font-weight: 500;
+    color: #f0e9e9;
+    margin: 5px 0;
+  }
+  
+  /* Detail values */
+  .profile-value {
+    font-size: 16px;
+    color: #e1dddd;
+  }
+  
+  /* Logout button */
+  .logout-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #e63946; /* Red background for logout */
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+  }
+  
+  .logout-btn:hover {
+    background-color: #c32f3a; /* Darker red on hover */
+  }
+  

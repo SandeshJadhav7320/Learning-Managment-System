@@ -36,7 +36,7 @@ const Sidebar = () => {
             to="/student-dashboard/logout"
             className={({ isActive }) => (isActive ? 'active-link' : '')}
           >
-            Logout
+            Profile
           </NavLink>
         </li>
       </ul>

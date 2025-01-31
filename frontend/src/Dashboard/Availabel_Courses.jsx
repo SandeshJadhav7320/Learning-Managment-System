@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import './Availabel_Courses.css'; // Import CSS for styling
+import React, { useState, useEffect } from "react";
+import "./Availabel_Courses.css"; // Import CSS for styling
 
 const Availabel_Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [enrollmentStatus, setEnrollmentStatus] = useState('');
+  const [popupMessage, setPopupMessage] = useState(""); // Message for the pop-up
+  const [showPopup, setShowPopup] = useState(false); // Control the visibility of the pop-up
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:8080/instructor/getCourses');
+        const response = await fetch("http://localhost:8080/instructor/getCourses");
         if (!response.ok) {
-          throw new Error('Failed to fetch courses');
+          throw new Error("Failed to fetch courses");
         }
         const data = await response.json();
         setCourses(data);
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        console.error("Error fetching courses:", error);
       } finally {
         setLoading(false);
       }
@@ -25,39 +26,48 @@ const Availabel_Courses = () => {
     fetchCourses();
   }, []);
 
-  // Enroll student in course
   const handleEnroll = async (courseId) => {
-    const confirmEnrollment = window.confirm('Do you want to enroll in this course?');
+    const confirmEnrollment = window.confirm("Do you want to enroll in this course?");
     if (!confirmEnrollment) {
-      setEnrollmentStatus('Enrollment canceled by the student.');
+      setPopupMessage("Enrollment canceled by the student.");
+      setShowPopup(true);
       return;
     }
-
-    const studentId = 1; // Replace with dynamically fetched student ID
-
+  
+    const studentId = 2; // Replace with dynamically fetched student ID
+  
     try {
-      const response = await fetch('http://localhost:8080/enrollment', {
-        method: 'POST',
+      const response = await fetch("http://localhost:8080/enrollment", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          studentId: studentId, // Ensure studentId is correct
-          courseId: courseId,   // Ensure courseId is correct
+          studentId: studentId,
+          courseId: courseId,
         }),
       });
-
+  
       const data = await response.json();
-
+  
+      // Check if the response is successful or has a specific message
       if (response.ok) {
-        setEnrollmentStatus(`Successfully enrolled in course: ${data.courseName}`);
+        setPopupMessage(`Successfully enrolled in course: ${data.courseName}`);
       } else {
-        setEnrollmentStatus(data.message || 'Failed to enroll in the course.');
+        setPopupMessage(data.message || "Failed to enroll in the course.");
       }
     } catch (error) {
-      console.error('Error during enrollment:', error);
-      setEnrollmentStatus('An error occurred during enrollment. Please try again.');
+      console.error("Error during enrollment:", error);
+      setPopupMessage("An error occurred during enrollment. Please try again.");
     }
+  
+    setShowPopup(true); // Show the pop-up with the message
+  };
+  
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setPopupMessage(""); // Clear the message when the pop-up is closed
   };
 
   if (loading) {
@@ -72,19 +82,29 @@ const Availabel_Courses = () => {
           <div key={course.id} className="course-card">
             <h2>{course.name}</h2>
             <p>{course.description}</p>
-            <p><strong>Fee:</strong> ${course.fee}</p>
-            <p><strong>Duration:</strong> {course.duration}</p>
-            <button 
-              className="enroll-btn" 
-              onClick={() => handleEnroll(course.id)}
-            >
+            <p>
+              <strong>Fee:</strong> ${course.fee}
+            </p>
+            <p>
+              <strong>Duration:</strong> {course.duration}
+            </p>
+            <button className="enroll-btn" onClick={() => handleEnroll(course.id)}>
               Enroll Now
             </button>
           </div>
         ))}
       </div>
 
-      {enrollmentStatus && <p className="enrollment-status">{enrollmentStatus}</p>}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>{popupMessage}</p>
+            <button className="popup-close-btn" onClick={closePopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

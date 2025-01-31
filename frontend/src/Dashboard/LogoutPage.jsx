@@ -1,33 +1,74 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LogoutPage = () => {
   const navigate = useNavigate();
+  const [studentData, setStudentData] = useState({ name: "", email: "", role: "" });
 
   useEffect(() => {
-    const logout = async () => {
+    // Fetch logged-in student details from backend or local storage
+    const fetchStudentData = async () => {
       try {
-        // Send logout request to backend
-        await axios.post('http://localhost:8080/student/logout');
-        
-        // Show the logout message to the user
-        setTimeout(() => {
-          // Redirect to login page after a few seconds
-          navigate('/login');
-        }, 2000); // Redirect after 2 seconds
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          console.error("No token found");
+          return;
+        }
+    
+        console.log("Token:", token); // Log token to ensure it's present
+        const response = await fetch("http://localhost:8080/student/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
+        if (response.ok) {
+          const data = await response.json();
+          setStudentData({ name: data.studentname, email: data.email, role: data.role });
+        } else {
+          console.error("Failed to fetch student data:", response.status);
+          console.log("Response:", await response.text());
+        }
       } catch (error) {
-        console.error('Error logging out', error);
+        console.error("Error fetching student data:", error);
       }
     };
 
-    logout();
-  }, [navigate]);
+    fetchStudentData();
+  }, []);
+
+  const handleLogout = () => {
+    // Clear authentication token or session
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("email");
+    // Redirect to the login page
+    navigate("/login");
+  };
 
   return (
-    <div className="logout-page">
-      <h2>You have successfully logged out!</h2>
-      <p>Redirecting you to the login page...</p>
+    <div className="profile-container">
+      <div className="profile-box">
+        <div className="profile-img">
+          {/* Default user icon if no image is available */}
+          <i className="fas fa-user"></i>
+        </div>
+        <h1 className="profile-heading">Profile</h1>
+        <div className="profile-detail">
+          <span>Name:</span>
+          <p className="profile-value">{studentData.name}</p>
+        </div>
+        <div className="profile-detail">
+          <span>Email ID:</span>
+          <p className="profile-value">{studentData.email}</p>
+        </div>
+        <div className="profile-detail">
+          <span>Role:</span>
+          <p className="profile-value">{studentData.role}</p>
+        </div>
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
+        </button>
+      </div>
     </div>
   );
 };

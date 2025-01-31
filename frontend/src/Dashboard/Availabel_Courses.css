@@ -38,6 +38,59 @@
   transition: transform 0.3s ease;
 }
 
+/* Popup overlay covering the entire page */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align content to the top */
+  z-index: 1000; /* Ensure it appears above everything else */
+  padding-top: 20px; /* Add space from the top */
+}
+
+/* Popup content styling */
+.popup-content {
+  background-color: #221f1f;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Popup message text */
+.popup-content p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #f6eded;
+}
+
+/* Close button styling */
+.popup-close-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #15012f; /* Close button color */
+  color: rgb(237, 226, 226);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Close button hover effect */
+.popup-close-btn:hover {
+  background-color: #5454d1;
+}
+
+
+
+
 /* Hover effect for course card */
 .course-card:hover {
   transform: translateY(-10px);
