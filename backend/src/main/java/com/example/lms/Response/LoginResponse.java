@@ -4,21 +4,24 @@ public class LoginResponse {
     
     private String message;
     private boolean status;
-    private String role;  // Add role if needed
+    private String role;
+    private int studentid; // ✅ Add student ID
 
-    // Constructor for message and status
+    // Constructor with studentid
+    public LoginResponse(String message, boolean status, String role, int studentid) {
+        this.message = message;
+        this.status = status;
+        this.role = role;
+        this.studentid = studentid;
+    }
+
+    // Constructor without studentid for error cases
     public LoginResponse(String message, boolean status) {
         this.message = message;
         this.status = status;
     }
 
-    // Constructor for message, status, and role (you can add role here if you want to return role)
-    public LoginResponse(String message, boolean status, String role) {
-        this.message = message;
-        this.status = status;
-        this.role = role;
-    }
-
+    // Getters and Setters
     public String getMessage() {
         return message;
     }
@@ -43,8 +46,16 @@ public class LoginResponse {
         this.role = role;
     }
 
+    public int getStudentid() {
+        return studentid;
+    }
+
+    public void setStudentid(int studentid) {
+        this.studentid = studentid;
+    }
+
     @Override
     public String toString() {
-        return "LoginResponse [message=" + message + ", status=" + status + ", role=" + role + "]";
+        return "LoginResponse [message=" + message + ", status=" + status + ", role=" + role + ", studentid=" + studentid + "]";
     }
 }

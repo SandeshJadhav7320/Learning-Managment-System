@@ -23,19 +23,18 @@ public class EnrollmentService {
 
     @Autowired
     private CourseRepository courseRepository;
-
     public void enrollStudent(Long studentId, Long courseId) {
-        // Check if student exists
+        // Fetch student
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
-        // Check if course exists
+        // Fetch course
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        // Check if already enrolled
+        // Allow multiple students to enroll, but prevent duplicate enrollments for the same student
         if (enrollmentRepository.existsByStudentAndCourse(student, course)) {
-            throw new RuntimeException("Student is already enrolled in this course");
+            throw new RuntimeException("You are already enrolled in this course.");
         }
 
         // Save enrollment
@@ -45,5 +44,5 @@ public class EnrollmentService {
         enrollment.setEnrollmentDate(LocalDateTime.now());
         enrollmentRepository.save(enrollment);
     }
-}
 
+}

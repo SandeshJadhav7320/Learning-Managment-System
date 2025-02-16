@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './LogoutPage.css';
 
 const LogoutPage = () => {
   const navigate = useNavigate();
@@ -10,29 +11,39 @@ const LogoutPage = () => {
     const fetchStudentData = async () => {
       try {
         const token = localStorage.getItem("authToken");
+        
+
         if (!token) {
-          console.error("No token found");
+          console.error("No token found. Redirecting to login...");
+          navigate("/");  // Redirect to login page if token is not found
           return;
         }
-    
+        console.log("Token retrieved:", token);
+
         console.log("Token:", token); // Log token to ensure it's present
-        const response = await fetch("http://localhost:8080/student/profile", {
+        const response = await fetch('http://localhost:8080/student/profile?email=sandesh@gmail.com', {
+          method: 'GET',
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+              'Authorization': `Bearer ${token}`,  // Add token in the Authorization header
+          }
+      })
+      ;
     
-        if (response.ok) {
-          const data = await response.json();
-          setStudentData({ name: data.studentname, email: data.email, role: data.role });
-        } else {
-          console.error("Failed to fetch student data:", response.status);
-          console.log("Response:", await response.text());
-        }
-      } catch (error) {
-        console.error("Error fetching student data:", error);
-      }
-    };
+    if (response.ok) {
+      const data = await response.json();
+      setStudentData({
+        name: data.studentname,
+        email: data.email,
+        role: data.role,
+      });
+    }  else {
+      console.error("Failed to fetch student data:", response.status);
+      console.log("Response:", await response.text());
+    }
+  } catch (error) {
+    console.error("Error fetching student data:", error);
+  }
+};
 
     fetchStudentData();
   }, []);
@@ -42,7 +53,7 @@ const LogoutPage = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("email");
     // Redirect to the login page
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -52,18 +63,18 @@ const LogoutPage = () => {
           {/* Default user icon if no image is available */}
           <i className="fas fa-user"></i>
         </div>
-        <h1 className="profile-heading">Profile</h1>
+        
         <div className="profile-detail">
-          <span>Name:</span>
-          <p className="profile-value">{studentData.name}</p>
+          <span>{studentData.role}</span>
+  
         </div>
         <div className="profile-detail">
-          <span>Email ID:</span>
-          <p className="profile-value">{studentData.email}</p>
+          <span>{studentData.name}</span>
+          <p className="profile-value"></p>
         </div>
         <div className="profile-detail">
-          <span>Role:</span>
-          <p className="profile-value">{studentData.role}</p>
+          <span>{studentData.email}</span>
+          <p className="profile-value"></p>
         </div>
         <button onClick={handleLogout} className="logout-btn">
           Logout

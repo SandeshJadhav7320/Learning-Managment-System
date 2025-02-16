@@ -3,11 +3,7 @@ package com.example.lms.StudentController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.lms.Dto.LoginDTO;
 import com.example.lms.Dto.StudentDTO;
@@ -29,17 +25,27 @@ public class StudentController {
         return id;
     }
 
-    // Login for student (you can generalize this to handle instructor/admin roles as well)
+    // Login for student
     @PostMapping(path = "/login")
     public ResponseEntity<?> loginStudent(@RequestBody LoginDTO loginDto) {
         LoginResponse loginResponse = studentServices.loginStudent(loginDto);
-        
-        // Check if login is successful or failed
+
         if (loginResponse.isStatus()) {
             return ResponseEntity.ok(loginResponse); // 200 OK
         } else {
-            // If login fails, return appropriate HTTP status (401 Unauthorized or 404 Not Found)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse); // 401 Unauthorized
+        }
+    }
+
+    // Fetch logged-in student profile (Frontend must send email)
+    @GetMapping(path = "/profile")
+    public ResponseEntity<?> getStudentProfile(@RequestParam String email) {
+        StudentDTO student = studentServices.getStudentByEmail(email);
+        
+        if (student != null) {
+            return ResponseEntity.ok(student); // 200 OK with student details
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student not found for email: " + email); // 404 Not Found
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.lms.Service.Impl;
 
-import java.util.Optional; 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,7 @@ public class StudentIMPL implements StudentServices {
 
     @Override
     public String addStudent(StudentDTO studentDto) {
-        // Ensure the role is being passed from the frontend
-        String role = studentDto.getRole(); // Get role from the DTO (it could be "student", "admin", etc.)
+        String role = studentDto.getRole(); // Get role from the DTO
 
         Student student = new Student(
             studentDto.getStudentname(),
@@ -37,13 +37,10 @@ public class StudentIMPL implements StudentServices {
         return student.getStudentname();
     }
 
-
     @Override
     public LoginResponse loginStudent(LoginDTO loginDto) {
-        // Using Optional to handle the potential null value for the student
         Optional<Student> optionalStudent = studentRepo.findByEmail(loginDto.getEmail());
 
-        // Checking if the student exists in the repository
         if (optionalStudent.isPresent()) {
             Student student1 = optionalStudent.get();
             String password = loginDto.getPassword();
@@ -51,14 +48,27 @@ public class StudentIMPL implements StudentServices {
             Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
             if (isPwdRight) {
-                // Here, check the role of the student (could be stored in a role field)
-            	String role = student1.getRole();  // Example: you can set the role directly based on business logic.
-                return new LoginResponse("Login success", true, role);
+                String role = student1.getRole();
+                int studentid = student1.getStudentid(); // ✅ Get student ID
+                return new LoginResponse("Login success", true, role, studentid);
             } else {
                 return new LoginResponse("Password Not Match", false);
             }
         } else {
             return new LoginResponse("Email not exist", false);
         }
+    }
+
+
+    // Implement the method to fetch student by email
+    @Override
+    public StudentDTO getStudentByEmail(String email) {
+        Optional<Student> studentOptional = studentRepo.findByEmail(email);
+
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            return new StudentDTO(student.getStudentid(), student.getStudentname(), student.getEmail(), null, student.getRole());
+        }
+        return null; // Return null if the student is not found
     }
 }

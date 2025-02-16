@@ -27,14 +27,17 @@ const Availabel_Courses = () => {
   }, []);
 
   const handleEnroll = async (courseId) => {
-    const confirmEnrollment = window.confirm("Do you want to enroll in this course?");
-    if (!confirmEnrollment) {
-      setPopupMessage("Enrollment canceled by the student.");
-      setShowPopup(true);
+    const studentId = sessionStorage.getItem("studentid"); // Ensure consistent naming and sessionStorage
+    
+    if (!studentId) {
+      alert("Student ID is missing. Please log in again.");
       return;
     }
   
-    const studentId = 2; // Replace with dynamically fetched student ID
+    console.log("Enrolling student:", studentId, "in course:", courseId); // Debugging log
+  
+    const confirmEnrollment = window.confirm("Do you want to enroll in this course?");
+    if (!confirmEnrollment) return;
   
     try {
       const response = await fetch("http://localhost:8080/enrollment", {
@@ -43,26 +46,26 @@ const Availabel_Courses = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          studentId: studentId,
+          studentId: Number(studentId), // Ensure it's sent as a number
           courseId: courseId,
         }),
       });
   
       const data = await response.json();
+      console.log("Enrollment response:", data); // Debugging log
   
-      // Check if the response is successful or has a specific message
-      if (response.ok) {
-        setPopupMessage(`Successfully enrolled in course: ${data.courseName}`);
-      } else {
-        setPopupMessage(data.message || "Failed to enroll in the course.");
-      }
+      setPopupMessage(data.message);
     } catch (error) {
       console.error("Error during enrollment:", error);
-      setPopupMessage("An error occurred during enrollment. Please try again.");
+      setPopupMessage("An error occurred. Please try again.");
     }
   
-    setShowPopup(true); // Show the pop-up with the message
+    setShowPopup(true);
   };
+  
+  
+  
+  
   
 
   const closePopup = () => {

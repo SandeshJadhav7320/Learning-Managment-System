@@ -10,5 +10,7 @@ import com.example.lms.Entity.Student;
 @Repository
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     boolean existsByStudentAndCourse(Student student, Course course);
+    
+    Enrollment findByStudentAndCourse(Student student, Course course);
 }
 

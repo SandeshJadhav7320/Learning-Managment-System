@@ -22,10 +22,14 @@ public class EnrollmentController {
     @PostMapping
     public ResponseEntity<?> enrollStudent(@RequestBody EnrollmentRequest request) {
         try {
+            if (request.getStudentId() == null || request.getCourseId() == null) {
+                throw new RuntimeException("Student ID and Course ID are required.");
+            }
+
             enrollmentService.enrollStudent(request.getStudentId(), request.getCourseId());
             return ResponseEntity.ok(new ApiResponse(true, "Enrollment successful!"));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(false, e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(false, "Error: " + e.getMessage()));
         }
     }
 }
