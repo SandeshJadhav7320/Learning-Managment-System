@@ -10,6 +10,15 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Helper function to store session data in localStorage
+  const storeSessionData = (token, studentname, studentid, email) => {
+    localStorage.setItem("authToken", token || "");
+    localStorage.setItem("studentName", studentname || ""); 
+    localStorage.setItem("studentid", studentid.toString());
+    localStorage.setItem("studentEmail", email || "");
+  };
+  
+
   async function login(event) {
     event.preventDefault();
     setLoading(true);
@@ -22,7 +31,7 @@ function Login() {
   
       const { message, role, studentname, studentid, token } = response.data;
 
-      // ✅ Ensure studentid exists before proceeding
+      // Ensure studentid exists before proceeding
       if (!studentid) {
         console.error("Student ID is missing from API response:", response.data);
         setError("Error: Student ID not found in response.");
@@ -30,13 +39,18 @@ function Login() {
       }
 
       if (message === "Login success") {
-        sessionStorage.setItem("authToken", token || ""); // Ensure token is not undefined
-        sessionStorage.setItem("studentName", studentname || ""); 
-        sessionStorage.setItem("studentid", studentid.toString()); // ✅ Store student ID
-  
-        console.log("Stored Student ID:", sessionStorage.getItem("studentid")); 
+        // Store session data in localStorage
+        storeSessionData(token, studentname, studentid, email);
 
-        // ✅ Navigate based on role
+        console.log("Stored Student ID:", localStorage.getItem("studentid")); 
+        console.log("Stored data:", {
+          token,
+          studentname,
+          studentid,
+          email,
+        });
+
+        // Navigate based on role
         switch (role) {
           case "student":
             navigate("/student-dashboard");

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Layout for student pages
 import Student_Home from './Dashboard/Student_Home'; // Home page for students
-import Student_Courses from './Dashboard/Student_Courses'; // Courses page for students
+import Student_Courses from './Dashboard/Student_Enrolled_Courses'; // Courses page for students
 import Login from './components/Login'; // Login page
 import Registration from './components/Registration';
 import StudentDashboard from './Dashboard/StudentDashboard';

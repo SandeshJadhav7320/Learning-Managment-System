@@ -27,7 +27,7 @@ const Availabel_Courses = () => {
   }, []);
 
   const handleEnroll = async (courseId) => {
-    const studentId = sessionStorage.getItem("studentid"); // Ensure consistent naming and sessionStorage
+    const studentId = localStorage.getItem("studentid"); // Get student ID from localStorage
     
     if (!studentId) {
       alert("Student ID is missing. Please log in again.");
@@ -62,11 +62,6 @@ const Availabel_Courses = () => {
   
     setShowPopup(true);
   };
-  
-  
-  
-  
-  
 
   const closePopup = () => {
     setShowPopup(false);

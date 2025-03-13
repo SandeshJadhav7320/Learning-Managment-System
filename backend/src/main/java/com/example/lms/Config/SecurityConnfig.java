@@ -29,7 +29,8 @@ public class SecurityConnfig {
                         .requestMatchers("/instructor/addCourse").permitAll()
                         .requestMatchers("/instructor/getCourses").permitAll()
                         .requestMatchers("/instructor/deleteCourse/**").permitAll() // Allow dynamic paths
-                        .requestMatchers("/enrollment").permitAll()
+                        .requestMatchers("/enrollment/**").permitAll()
+                        .requestMatchers("/student/profile").authenticated()
                         .anyRequest().denyAll() // Deny all other requests
                 )
                 .build();
