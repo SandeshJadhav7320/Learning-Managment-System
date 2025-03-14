@@ -1,41 +1,57 @@
 import React, { useState, useEffect } from "react";
+// import "./Courses.css"; // Import the CSS file for styling
 
 const Courses = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const studentId = localStorage.getItem("studentid");
 
   useEffect(() => {
-    fetch(`http://localhost:8080/enrollment/enrolled-courses/${studentId}`)
-      .then((response) => response.json())
-      .then((data) => setEnrolledCourses(data))
-      .catch((error) => console.error("Error fetching enrolled courses:", error));
-  }, []);
+    const fetchEnrolledCourses = async () => {
+      if (!studentId) {
+        alert("Student ID is missing. Please log in again.");
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8080/enrollment/enrolled-courses/${studentId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch enrolled courses");
+        }
+        const data = await response.json();
+        setEnrolledCourses(data);
+      } catch (error) {
+        console.error("Error fetching enrolled courses:", error);
+      }
+    };
+
+    fetchEnrolledCourses();
+  }, [studentId]);
 
   return (
-    <div className="container mt-4">
-      <h2 className="text-center mb-4">My Enrolled Courses</h2>
-      <div className="row">
+    <div className="courses-page">
+      <h1 className="courses-title">My Enrolled Courses</h1>
+      <div className="courses-container">
         {enrolledCourses.length > 0 ? (
           enrolledCourses.map((course) => (
-            <div className="col-md-4 mb-4" key={course.id}>
-              <div className="card shadow-sm">
-                
-                <div className="card-body">
-                  <h5 className="card-title">{course.name}</h5>
-                  <p className="card-text">{course.description}</p>
-                  <button className="btn btn-primary">Go to Course</button>
-                </div>
+            <div className="course-card" key={course.id}>
+              <img 
+                src={course.imageUrl || "https://via.placeholder.com/300"} 
+                alt={course.name} 
+                className="course-image"
+              />
+              <div className="course-info">
+                <h2>{course.name}</h2>
+                <p>{course.description}</p>
+                <button className="course-button">Go to Course</button>
               </div>
             </div>
           ))
         ) : (
-          <p className="text-center">No enrolled courses found.</p>
+          <p className="no-courses">No enrolled courses found.</p>
         )}
       </div>
     </div>
   );
 };
-
-
 
 export default Courses;

@@ -3,6 +3,7 @@ import "./Availabel_Courses.css"; // Import CSS for styling
 
 const Availabel_Courses = () => {
   const [courses, setCourses] = useState([]);
+  const [enrolledCourses, setEnrolledCourses] = useState(new Set()); // Store enrolled courses
   const [loading, setLoading] = useState(true);
   const [popupMessage, setPopupMessage] = useState(""); // Message for the pop-up
   const [showPopup, setShowPopup] = useState(false); // Control the visibility of the pop-up
@@ -18,12 +19,26 @@ const Availabel_Courses = () => {
         setCourses(data);
       } catch (error) {
         console.error("Error fetching courses:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
-    fetchCourses();
+    const fetchEnrolledCourses = async () => {
+      const studentId = localStorage.getItem("studentid");
+      if (!studentId) return;
+
+      try {
+        const response = await fetch(`http://localhost:8080/enrollment/${studentId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch enrolled courses");
+        }
+        const data = await response.json();
+        setEnrolledCourses(new Set(data.map((course) => course.id))); // Store enrolled course IDs
+      } catch (error) {
+        console.error("Error fetching enrolled courses:", error);
+      }
+    };
+
+    Promise.all([fetchCourses(), fetchEnrolledCourses()]).finally(() => setLoading(false));
   }, []);
 
   const handleEnroll = async (courseId) => {
@@ -55,6 +70,9 @@ const Availabel_Courses = () => {
       console.log("Enrollment response:", data); // Debugging log
   
       setPopupMessage(data.message);
+
+      // Update the enrolled courses list after successful enrollment
+      setEnrolledCourses((prev) => new Set([...prev, courseId]));
     } catch (error) {
       console.error("Error during enrollment:", error);
       setPopupMessage("An error occurred. Please try again.");
@@ -86,8 +104,12 @@ const Availabel_Courses = () => {
             <p>
               <strong>Duration:</strong> {course.duration}
             </p>
-            <button className="enroll-btn" onClick={() => handleEnroll(course.id)}>
-              Enroll Now
+            <button
+              className="enroll-btn"
+              onClick={() => handleEnroll(course.id)}
+              disabled={enrolledCourses.has(course.id)} // Disable if already enrolled
+            >
+              {enrolledCourses.has(course.id) ? "Enrolled" : "Enroll Now"}
             </button>
           </div>
         ))}
