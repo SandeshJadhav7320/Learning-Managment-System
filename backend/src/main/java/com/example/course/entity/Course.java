@@ -13,11 +13,12 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     private String name;
     private String description;
     private Double fee;
     private String duration;
+    private String videoUrl; // 🔹 New field added to store video URL
 
     // Getters and Setters
     public Long getId() {
@@ -58,5 +59,13 @@ public class Course {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 }

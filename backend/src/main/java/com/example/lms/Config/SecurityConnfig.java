@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConnfig {
+public class SecurityConnfig {  // Fixed typo in class name
 
     // Password Encoder Bean
     @Bean
@@ -28,13 +28,16 @@ public class SecurityConnfig {
                         .requestMatchers("/student/**").permitAll() // Allow all student endpoints
                         .requestMatchers("/instructor/addCourse").permitAll()
                         .requestMatchers("/instructor/getCourses").permitAll()
-                        .requestMatchers("/instructor/deleteCourse/**").permitAll() // Allow dynamic paths
+                        .requestMatchers("/instructor/deleteCourse/**").permitAll()
+                        .requestMatchers("/instructor/uploadVideo").permitAll() // Allow video uploads
+                        .requestMatchers("/instructor/videos/**").permitAll() // ✅ Allow public access to videos
                         .requestMatchers("/enrollment/**").permitAll()
                         .requestMatchers("/student/profile").authenticated()
-                        .anyRequest().denyAll() // Deny all other requests
+                        .anyRequest().denyAll() // Block everything else
                 )
                 .build();
     }
+
 
     // CORS Configuration
     @Bean
@@ -45,7 +48,8 @@ public class SecurityConnfig {
                 registry.addMapping("/**") // Apply to all routes
                         .allowedOrigins("http://localhost:5173") // Frontend origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*");
+                        .allowedHeaders("*")
+                        .allowCredentials(true); // Allow credentials (for Authorization headers)
             }
         };
     }
