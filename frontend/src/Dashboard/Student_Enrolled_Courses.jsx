@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import "./Courses.css"; // Import the CSS file for styling
+import { useNavigate } from "react-router-dom"; // Import for navigation
 
 const Courses = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const studentId = localStorage.getItem("studentid");
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
@@ -27,6 +28,10 @@ const Courses = () => {
     fetchEnrolledCourses();
   }, [studentId]);
 
+  const handleGoToCourse = (course) => {
+    navigate(`/course/${course.id}`, { state: { videoUrl: course.videoUrl } });
+  };
+
   return (
     <div className="courses-page">
       <h1 className="courses-title">My Enrolled Courses</h1>
@@ -42,7 +47,12 @@ const Courses = () => {
               <div className="course-info">
                 <h2>{course.name}</h2>
                 <p>{course.description}</p>
-                <button className="course-button">Go to Course</button>
+                <button 
+                  className="course-button" 
+                  onClick={() => handleGoToCourse(course)}
+                >
+                  Go to Course
+                </button>
               </div>
             </div>
           ))

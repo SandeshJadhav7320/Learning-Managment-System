@@ -7,17 +7,24 @@ const Instructor_Add_Course = () => {
   const [courseDescription, setCourseDescription] = useState('');
   const [courseFee, setCourseFee] = useState('');
   const [courseDuration, setCourseDuration] = useState('');
+  const [videoFile, setVideoFile] = useState(null);
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('name', courseName);
+    formData.append('description', courseDescription);
+    formData.append('fee', courseFee);
+    formData.append('duration', courseDuration);
+    if (videoFile) {
+      formData.append('video', videoFile);
+    }
 
     try {
-      const response = await axios.post('http://localhost:8080/instructor/addCourse', {
-        name: courseName,
-        description: courseDescription,
-        fee: courseFee,
-        duration: courseDuration
+      const response = await axios.post('http://localhost:8080/instructor/addCourse', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       if (response.data.success) {
@@ -37,42 +44,23 @@ const Instructor_Add_Course = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Course Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
-            required
-          />
+          <input type="text" className="form-control" value={courseName} onChange={(e) => setCourseName(e.target.value)} required />
         </div>
         <div className="form-group">
           <label>Course Description</label>
-          <textarea
-            className="form-control"
-            value={courseDescription}
-            onChange={(e) => setCourseDescription(e.target.value)}
-            required
-          ></textarea>
+          <textarea className="form-control" value={courseDescription} onChange={(e) => setCourseDescription(e.target.value)} required></textarea>
         </div>
         <div className="form-group">
           <label>Course Fee</label>
-          <input
-            type="number"
-            className="form-control"
-            value={courseFee}
-            onChange={(e) => setCourseFee(e.target.value)}
-            required
-          />
+          <input type="number" className="form-control" value={courseFee} onChange={(e) => setCourseFee(e.target.value)} required />
         </div>
         <div className="form-group">
           <label>Course Duration</label>
-          <input
-            type="text"
-            className="form-control"
-            value={courseDuration}
-            onChange={(e) => setCourseDuration(e.target.value)}
-            required
-          />
+          <input type="text" className="form-control" value={courseDuration} onChange={(e) => setCourseDuration(e.target.value)} required />
+        </div>
+        <div className="form-group">
+          <label>Upload Video</label>
+          <input type="file" className="form-control" accept="video/*" onChange={(e) => setVideoFile(e.target.files[0])} />
         </div>
         <button type="submit" className="btn btn-primary">Add Course</button>
       </form>
