@@ -17,46 +17,33 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    private static final String UPLOAD_DIR = "uploads"; // 🔹 Folder to store videos
+    private static final String UPLOAD_DIR = "uploads"; // ✅ Store videos in `uploads/` (Project Root)
 
     // ✅ Add Course with Video Upload
     public Course addCourse(Course course, MultipartFile videoFile) throws IOException {
         if (videoFile != null && !videoFile.isEmpty()) {
             // 🔹 Ensure Upload Directory Exists
-            File uploadDir = new File("uploads");
+            File uploadDir = new File(UPLOAD_DIR);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
 
-            // 🔹 Save Video to Local Storage
-            String filePath = "uploads" + File.separator + videoFile.getOriginalFilename();
+            // 🔹 Save Video to Uploads Folder
+            String filePath = UPLOAD_DIR + File.separator + videoFile.getOriginalFilename();
             videoFile.transferTo(Paths.get(filePath));
 
-            // ✅ Store Video URL instead of local path
-            String videoUrl = "src/main/resources/static/uploads/" + videoFile.getOriginalFilename();
+            // ✅ Store Video URL for Frontend Access
+            String videoUrl = "/uploads/" + videoFile.getOriginalFilename();
+
             course.setVideoUrl(videoUrl);
         }
         return courseRepository.save(course);
     }
 
-
-
-    // ✅ Retrieve all courses
+    // ✅ Retrieve all courses with correct video URLs
     public List<Course> getAllCourses() {
-        List<Course> courses = courseRepository.findAll();
-        
-        // Update video URL to be accessible via API
-        String baseUrl = "http://localhost:8080/instructor/videos/";  
-        courses.forEach(course -> {
-            if (course.getVideoUrl() != null) {
-                String filename = new File(course.getVideoUrl()).getName();
-                course.setVideoUrl(baseUrl + filename);
-            }
-        });
-
-        return courses;
+        return courseRepository.findAll();
     }
-
 
     // ✅ Delete a course
     public void deleteCourse(Long courseId) {

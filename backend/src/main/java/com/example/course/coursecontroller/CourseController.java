@@ -13,18 +13,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
 @RequestMapping("/instructor")
-@CrossOrigin(origins = "http://localhost:5173") // Adjust for your frontend URL
+@CrossOrigin(origins = "http://localhost:3000") // ✅ Allow frontend requests
 public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    private static final String UPLOAD_DIR = "/uploads/"; // ✅ Upload directory
 
     // ✅ Add Course with Video Upload
     @PostMapping(value = "/addCourse", consumes = {"multipart/form-data"})
@@ -49,7 +50,7 @@ public class CourseController {
 
             return ResponseEntity.ok(new Response("Course added successfully", true, savedCourse));
         } catch (Exception e) {
-            e.printStackTrace(); // 🔹 Log the error for debugging
+            e.printStackTrace(); // 🔹 Log error for debugging
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new Response("Failed to add course", false, null));
         }
@@ -81,15 +82,14 @@ public class CourseController {
     }
 
     // ✅ Serve Video Files
- // ✅ Serve Video Files (Fixed)
-    @GetMapping("/videos/{filename}")
+    @GetMapping("/uploads/{filename}")
     public ResponseEntity<Resource> getVideo(@PathVariable String filename) {
         try {
-            Path videoPath = Paths.get("uploads").resolve(filename).normalize();
+            Path videoPath = Paths.get(UPLOAD_DIR).resolve(filename).normalize();
             Resource resource = new UrlResource(videoPath.toUri());
 
             if (resource.exists() && resource.isReadable()) {
-                // ✅ Corrected: Now getting media type from resource, not File
+                // ✅ Corrected: Now getting media type from resource
                 MediaType mediaType = MediaTypeFactory.getMediaType(resource)
                         .orElse(MediaType.APPLICATION_OCTET_STREAM);
 
@@ -98,13 +98,14 @@ public class CourseController {
                         .contentType(mediaType)
                         .body(resource);
             } else {
+                System.err.println("❌ Video not found: " + filename);
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
+            System.err.println("❌ Error loading video: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
 
     // ✅ Response Class for Consistent API Responses
     static class Response {

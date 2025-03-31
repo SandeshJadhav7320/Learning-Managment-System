@@ -22,23 +22,7 @@ const Availabel_Courses = () => {
       }
     };
 
-    const fetchEnrolledCourses = async () => {
-      const studentId = localStorage.getItem("studentid");
-      if (!studentId) return;
-
-      try {
-        const response = await fetch(`http://localhost:8080/enrollment/${studentId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch enrolled courses");
-        }
-        const data = await response.json();
-        setEnrolledCourses(new Set(data.map((course) => course.id))); // Store enrolled course IDs
-      } catch (error) {
-        console.error("Error fetching enrolled courses:", error);
-      }
-    };
-
-    Promise.all([fetchCourses(), fetchEnrolledCourses()]).finally(() => setLoading(false));
+    Promise.all([fetchCourses(), ]).finally(() => setLoading(false));
   }, []);
 
   const handleEnroll = async (courseId) => {

@@ -8,49 +8,56 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConnfig {  // Fixed typo in class name
+public class SecurityConnfig implements WebMvcConfigurer {  // ✅ Implement WebMvcConfigurer
 
-    // Password Encoder Bean
+    // ✅ Password Encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    // Security Filter Chain
+    // ✅ Security Configuration
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable() // Disable CSRF for simplicity
+        return http
+                .csrf(csrf -> csrf.disable())  // 🔥 Disable CSRF for API calls
+                .cors(cors -> cors.configurationSource(request -> new org.springframework.web.cors.CorsConfiguration().applyPermitDefaultValues()))  // 🔥 Enable CORS properly
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/student/**").permitAll() // Allow all student endpoints
-                        .requestMatchers("/instructor/addCourse").permitAll()
-                        .requestMatchers("/instructor/getCourses").permitAll()
-                        .requestMatchers("/instructor/deleteCourse/**").permitAll()
-                        .requestMatchers("/instructor/uploadVideo").permitAll() // Allow video uploads
-                        .requestMatchers("/instructor/videos/**").permitAll() // ✅ Allow public access to videos
+                        .requestMatchers("/student/**").permitAll()
+                        .requestMatchers("/instructor/**").permitAll()
                         .requestMatchers("/enrollment/**").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()  // ✅ Allow access to uploaded videos
+                        .requestMatchers("/static/**", "/resources/**").permitAll() // ✅ Allow other static resources
                         .requestMatchers("/student/profile").authenticated()
-                        .anyRequest().denyAll() // Block everything else
+                        .anyRequest().authenticated() // Require authentication for all other requests
                 )
                 .build();
     }
 
-
-    // CORS Configuration
+    // ✅ CORS Configuration
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Apply to all routes
-                        .allowedOrigins("http://localhost:5173") // Frontend origin
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:5173", "http://localhost:3000") // ✅ Allow frontend access
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true); // Allow credentials (for Authorization headers)
+                        .allowCredentials(true);
             }
         };
+    }
+
+    // ✅ Static Resource Configuration (Enables Video Access)
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/uploads/**")  // ✅ Maps "/uploads/**" to actual folder
+                .addResourceLocations("file:uploads/");
     }
 }

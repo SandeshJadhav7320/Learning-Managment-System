@@ -47,4 +47,10 @@ public class EnrollmentService {
     public List<Course> getEnrolledCoursesByStudentId(Long studentId) {
         return enrollmentRepository.findCoursesByStudentId(studentId);
     }
+
+    // ✅ Fetch enrollment by ID (Fix for your issue)
+    public Enrollment getEnrollmentById(Long id) {
+        return enrollmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Enrollment not found for ID: " + id));
+    }
 }

@@ -39,11 +39,6 @@ const Courses = () => {
         {enrolledCourses.length > 0 ? (
           enrolledCourses.map((course) => (
             <div className="course-card" key={course.id}>
-              <img 
-                src={course.imageUrl || "https://via.placeholder.com/300"} 
-                alt={course.name} 
-                className="course-image"
-              />
               <div className="course-info">
                 <h2>{course.name}</h2>
                 <p>{course.description}</p>

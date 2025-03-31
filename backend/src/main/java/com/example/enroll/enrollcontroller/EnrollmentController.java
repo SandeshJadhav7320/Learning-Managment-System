@@ -9,12 +9,13 @@ import com.example.enroll.RequestDTO.EnrollmentRequest;
 import com.example.enroll.ResponseDTO.ApiResponse;
 import com.example.enroll.sevice.EnrollmentService;
 import com.example.course.entity.Course;
+import com.example.enroll.Entity.Enrollment;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/enrollment")
-@CrossOrigin("*") // Allow frontend access
+@CrossOrigin("**") // Allow frontend access
 public class EnrollmentController {
 
     @Autowired
@@ -39,5 +40,17 @@ public class EnrollmentController {
     public ResponseEntity<List<Course>> getEnrolledCourses(@PathVariable Long studentId) {
         List<Course> enrolledCourses = enrollmentService.getEnrolledCoursesByStudentId(studentId);
         return ResponseEntity.ok(enrolledCourses);
+    }
+
+
+    // ✅ Fetch enrollment by ID (Fix for your issue)
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEnrollmentById(@PathVariable Long id) {
+        try {
+            Enrollment enrollment = enrollmentService.getEnrollmentById(id);
+            return ResponseEntity.ok(enrollment);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(false, e.getMessage()));
+        }
     }
 }
