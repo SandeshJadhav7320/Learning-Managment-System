@@ -9,7 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CourseService {
@@ -17,39 +22,63 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    private static final String UPLOAD_DIR = "uploads"; // ✅ Store videos in `uploads/` (Project Root)
+    private static final String UPLOAD_DIR = "uploads"; // ✅ Store videos in `uploads/`
 
-    // ✅ Add Course with Video Upload
-    public Course addCourse(Course course, MultipartFile videoFile) throws IOException {
-        if (videoFile != null && !videoFile.isEmpty()) {
-            // 🔹 Ensure Upload Directory Exists
+    // ✅ Add Course with Multiple Video Uploads
+    public Course addCourse(Course course, List<MultipartFile> videoFiles) throws IOException {
+        List<String> videoUrls = new ArrayList<>();
+
+        if (videoFiles != null && !videoFiles.isEmpty()) {
             File uploadDir = new File(UPLOAD_DIR);
             if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
+                uploadDir.mkdirs(); // ✅ Create directory if not exists
             }
 
-            // 🔹 Save Video to Uploads Folder
-            String filePath = UPLOAD_DIR + File.separator + videoFile.getOriginalFilename();
-            videoFile.transferTo(Paths.get(filePath));
-
-            // ✅ Store Video URL for Frontend Access
-            String videoUrl = "/uploads/" + videoFile.getOriginalFilename();
-
-            course.setVideoUrl(videoUrl);
+            for (MultipartFile videoFile : videoFiles) {
+                // ✅ Ensure unique filename to avoid overwriting
+                String uniqueFileName = UUID.randomUUID() + "_" + videoFile.getOriginalFilename();
+                String filePath = UPLOAD_DIR + File.separator + uniqueFileName;
+                
+                try {
+                    Files.copy(videoFile.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+                    String videoUrl = "/uploads/" + uniqueFileName; // ✅ URL for frontend
+                    videoUrls.add(videoUrl);
+                } catch (IOException e) {
+                    throw new IOException("Failed to store video: " + videoFile.getOriginalFilename(), e);
+                }
+            }
         }
+
+        course.setVideoUrls(videoUrls);
         return courseRepository.save(course);
     }
 
-    // ✅ Retrieve all courses with correct video URLs
+    // ✅ Retrieve all courses
     public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+        List<Course> courses = courseRepository.findAll();
+        courses.forEach(course -> course.getVideoUrls().size()); // ✅ Force loading
+        return courses;
     }
 
-    // ✅ Delete a course
+    // ✅ Delete a course and its videos
     public void deleteCourse(Long courseId) {
-        if (!courseRepository.existsById(courseId)) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+
+        if (!courseOptional.isPresent()) {
             throw new IllegalArgumentException("Course not found with ID: " + courseId);
         }
+
+        Course course = courseOptional.get();
+
+        // ✅ Delete associated video files
+        for (String videoUrl : course.getVideoUrls()) {
+            File videoFile = new File(UPLOAD_DIR + File.separator + videoUrl.substring(videoUrl.lastIndexOf("/") + 1));
+            if (videoFile.exists()) {
+                videoFile.delete();
+            }
+        }
+
+        // ✅ Delete course from database
         courseRepository.deleteById(courseId);
     }
 }

@@ -1,10 +1,7 @@
 package com.example.course.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -18,54 +15,26 @@ public class Course {
     private String description;
     private Double fee;
     private String duration;
-    private String videoUrl; // 🔹 New field added to store video URL
+
+    @ElementCollection // ✅ Store list of video URLs directly
+    private List<String> videoUrls;
 
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName() {
-        return name;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Double getFee() { return fee; }
+    public void setFee(Double fee) { this.fee = fee; }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDuration() { return duration; }
+    public void setDuration(String duration) { this.duration = duration; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getFee() {
-        return fee;
-    }
-
-    public void setFee(Double fee) {
-        this.fee = fee;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
+    public List<String> getVideoUrls() { return videoUrls; }
+    public void setVideoUrls(List<String> videoUrls) { this.videoUrls = videoUrls; }
 }

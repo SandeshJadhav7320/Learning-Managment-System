@@ -3,18 +3,11 @@ package com.example.course.coursecontroller;
 import com.example.course.entity.Course;
 import com.example.course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -25,19 +18,17 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    private static final String UPLOAD_DIR = "/uploads/"; // ✅ Upload directory
-
-    // ✅ Add Course with Video Upload
+    // ✅ Add Course with Multiple Video Uploads
     @PostMapping(value = "/addCourse", consumes = {"multipart/form-data"})
     public ResponseEntity<Response> addCourse(
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("fee") Double fee,
             @RequestParam("duration") String duration,
-            @RequestParam(value = "video", required = false) MultipartFile videoFile) {
+            @RequestParam(value = "videos", required = false) List<MultipartFile> videoFiles) {
         try {
             System.out.println("📌 Received Course: " + name);
-            System.out.println("📌 Video file: " + (videoFile != null ? videoFile.getOriginalFilename() : "No video"));
+            System.out.println("📌 Number of videos: " + (videoFiles != null ? videoFiles.size() : 0));
 
             Course course = new Course();
             course.setName(name);
@@ -45,8 +36,8 @@ public class CourseController {
             course.setFee(fee);
             course.setDuration(duration);
 
-            Course savedCourse = courseService.addCourse(course, videoFile);
-            System.out.println("✅ Course Saved with Video URL: " + savedCourse.getVideoUrl());
+            Course savedCourse = courseService.addCourse(course, videoFiles);
+            System.out.println("✅ Course Saved with Video URLs: " + savedCourse.getVideoUrls());
 
             return ResponseEntity.ok(new Response("Course added successfully", true, savedCourse));
         } catch (Exception e) {
@@ -57,6 +48,7 @@ public class CourseController {
     }
 
     // ✅ Retrieve All Courses
+ // ✅ Fetch All Courses
     @GetMapping("/getCourses")
     public ResponseEntity<List<Course>> getCourses() {
         List<Course> courses = courseService.getAllCourses();
@@ -65,6 +57,7 @@ public class CourseController {
         }
         return ResponseEntity.ok(courses);
     }
+
 
     // ✅ Delete Course
     @DeleteMapping("/deleteCourse/{id}")
@@ -78,32 +71,6 @@ public class CourseController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new Response("Failed to delete course", false, null));
-        }
-    }
-
-    // ✅ Serve Video Files
-    @GetMapping("/uploads/{filename}")
-    public ResponseEntity<Resource> getVideo(@PathVariable String filename) {
-        try {
-            Path videoPath = Paths.get(UPLOAD_DIR).resolve(filename).normalize();
-            Resource resource = new UrlResource(videoPath.toUri());
-
-            if (resource.exists() && resource.isReadable()) {
-                // ✅ Corrected: Now getting media type from resource
-                MediaType mediaType = MediaTypeFactory.getMediaType(resource)
-                        .orElse(MediaType.APPLICATION_OCTET_STREAM);
-
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
-                        .contentType(mediaType)
-                        .body(resource);
-            } else {
-                System.err.println("❌ Video not found: " + filename);
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            System.err.println("❌ Error loading video: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
