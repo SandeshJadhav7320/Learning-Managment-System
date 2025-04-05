@@ -67,12 +67,17 @@ public class CourseController {
             return ResponseEntity.ok(new Response("Course deleted successfully", true, null));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new Response(e.getMessage(), false, null));
-        } catch (Exception e) {
+                    .body(new Response("Error: " + e.getMessage(), false, null));
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new Response("Failed to delete course", false, null));
+                    .body(new Response("Internal Server Error: " + e.getMessage(), false, null));
+        } catch (Exception e) {
+            e.printStackTrace(); // Full stack trace for dev
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new Response("Unexpected Error: " + e.getMessage(), false, null));
         }
     }
+
 
     // ✅ Response Class for Consistent API Responses
     static class Response {

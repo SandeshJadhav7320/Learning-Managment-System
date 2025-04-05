@@ -1,6 +1,8 @@
 package com.example.course.entity;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,8 +18,9 @@ public class Course {
     private Double fee;
     private String duration;
 
-    @ElementCollection // ✅ Store list of video URLs directly
-    private List<String> videoUrls;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> videoUrls = new ArrayList<>();
+
 
     // Getters and Setters
     public Long getId() { return id; }

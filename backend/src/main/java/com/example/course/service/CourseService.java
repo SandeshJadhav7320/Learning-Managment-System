@@ -70,15 +70,34 @@ public class CourseService {
 
         Course course = courseOptional.get();
 
-        // ✅ Delete associated video files
-        for (String videoUrl : course.getVideoUrls()) {
-            File videoFile = new File(UPLOAD_DIR + File.separator + videoUrl.substring(videoUrl.lastIndexOf("/") + 1));
-            if (videoFile.exists()) {
-                videoFile.delete();
+        // ✅ Safely attempt to delete associated video files
+        if (course.getVideoUrls() != null) {
+            for (String videoUrl : course.getVideoUrls()) {
+                try {
+                    String filename = videoUrl.substring(videoUrl.lastIndexOf("/") + 1);
+                    File videoFile = new File(UPLOAD_DIR + File.separator + filename);
+
+                    if (videoFile.exists()) {
+                        boolean deleted = videoFile.delete();
+                        if (!deleted) {
+                            System.out.println("⚠️ Could not delete file: " + videoFile.getAbsolutePath());
+                        }
+                    } else {
+                        System.out.println("⚠️ File not found: " + videoFile.getAbsolutePath());
+                    }
+                } catch (Exception e) {
+                    System.out.println("❌ Error deleting video file: " + videoUrl);
+                    e.printStackTrace(); // Log for debugging
+                }
             }
         }
 
         // ✅ Delete course from database
-        courseRepository.deleteById(courseId);
+        try {
+            courseRepository.deleteById(courseId);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete course from DB: " + e.getMessage());
+        }
     }
+
 }
