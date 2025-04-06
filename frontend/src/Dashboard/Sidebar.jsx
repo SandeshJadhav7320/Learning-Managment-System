@@ -1,18 +1,23 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { FaHome, FaGraduationCap } from 'react-icons/fa';
 import './Sidebar.css';
 
 const Sidebar = () => {
   return (
-    <div className="sidebar">
-      <h2>Student Dashboard</h2>
-      <ul>
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <FaGraduationCap className="logo-icon" />
+        <span className="logo-text">Student Dashboard</span>
+      </div>
+      <ul className="navbar-links">
         <li>
           <NavLink
             to="/student-dashboard/home"
             className={({ isActive }) => (isActive ? 'active-link' : '')}
           >
-            Home
+          
+            Home 
           </NavLink>
         </li>
         <li>
@@ -40,7 +45,7 @@ const Sidebar = () => {
           </NavLink>
         </li>
       </ul>
-    </div>
+    </nav>
   );
 };
 

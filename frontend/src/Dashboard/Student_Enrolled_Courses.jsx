@@ -1,10 +1,11 @@
+// src/pages/Courses.jsx
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import for navigation
+import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const studentId = localStorage.getItem("studentid");
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
@@ -15,9 +16,7 @@ const Courses = () => {
 
       try {
         const response = await fetch(`http://localhost:8080/enrollment/enrolled-courses/${studentId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch enrolled courses");
-        }
+        if (!response.ok) throw new Error("Failed to fetch enrolled courses");
         const data = await response.json();
         setEnrolledCourses(data);
       } catch (error) {
@@ -29,7 +28,9 @@ const Courses = () => {
   }, [studentId]);
 
   const handleGoToCourse = (course) => {
-    navigate(`/course/${course.id}`, { state: { videoUrl: course.videoUrl } });
+    navigate(`/course/${course.id}`, {
+      state: { videoUrls: course.videoUrls } // Send all videos of the course
+    });
   };
 
   return (
@@ -42,10 +43,7 @@ const Courses = () => {
               <div className="course-info">
                 <h2>{course.name}</h2>
                 <p>{course.description}</p>
-                <button 
-                  className="course-button" 
-                  onClick={() => handleGoToCourse(course)}
-                >
+                <button className="course-button" onClick={() => handleGoToCourse(course)}>
                   Go to Course
                 </button>
               </div>

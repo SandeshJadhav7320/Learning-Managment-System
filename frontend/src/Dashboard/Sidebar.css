@@ -1,114 +1,110 @@
-/* Sidebar container */
-.sidebar {
-  width: 300px;
-  height: 200vh;
-  background-color: #000000;
-  color: rgb(208, 196, 196);
-  padding-top: 30px;
+.navbar {
+  width: 100%;
   position: fixed;
-  left: 0;
   top: 0;
-  transition: all 0.3s ease;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Sidebar heading */
-.sidebar h2 {
-  text-align: center;
-  margin-bottom: 40px;
-  font-size: 27px;
-}
-
-/* Sidebar navigation list */
-.sidebar ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-/* Sidebar list items */
-.sidebar ul li {
-  margin: 20px 0;
-}
-
-/* Sidebar links */
-.sidebar ul li a {
-  text-decoration: none;
-  color: white;
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  color: #1a1a1a; /* Soft black */
   font-size: 20px;
-  padding-left: 20px;
-  display: block;
-}
-
-/* Sidebar links hover effect */
-.sidebar ul li a:hover {
-  background-color: #34495e;
-}
-
-/* Mobile view (small screens) */
-@media (max-width: 768px) {
-  /* Make sidebar a top navigation bar */
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    padding-top: 10px;
-  }
-
-  /* Align the items horizontally in a row */
-  .sidebar ul {
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .sidebar ul li {
-    margin: 0 10px;
-  }
-
-  /* Adjust font size for better readability */
-  .sidebar ul li a {
-    font-size: 16px;
-    padding: 10px;
-  }
-
-  /* Remove background hover on mobile */
-  .sidebar ul li a:hover {
-    background-color: transparent;
-  }
-}
-
-/* Tablet view (medium screens) */
-@media (max-width: 1024px) {
-  /* Collapse the sidebar */
-  .sidebar {
-    width: 200px;
-  }
-
-  /* Adjust the font size for better clarity on tablets */
-  .sidebar ul li a {
-    font-size: 17px;
-  }
-}
-
-/* Larger screens (desktop view) */
-@media (min-width: 1025px) {
-  /* Keep the sidebar as is (no changes needed) */
-  .sidebar {
-    width: 250px;
-  }
-
-  /* Adjust font size for desktop */
-  .sidebar ul li a {
-    font-size: 18px;
-  }
-}
-/* Highlight active link */
-.sidebar ul li a.active-link {
-  background-color: #00cec9;
-  color: #ffffff;
   font-weight: bold;
-  border-radius: 4px;
+  flex-shrink: 0;
 }
 
-/* Add subtle animation to active link change */
-.sidebar ul li a.active-link {
-  transition: background-color 0.3s ease, color 0.3s ease;
+.logo-icon {
+  font-size: 22px;
+  margin-right: 8px;
+}
+
+.logo-text {
+  display: inline-block;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.navbar-links li {
+  display: inline-block;
+}
+
+.navbar-links a {
+  color: #1a1a1a; /* Soft black */
+  text-decoration: none;
+  font-size: 16px;
+  padding: 6px 14px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links .active-link,
+.navbar-links a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #000000;
+}
+
+.icon {
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Responsive behavior */
+@media screen and (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 20px;
+  }
+
+  .navbar-links {
+    justify-content: center;
+    gap: 12px;
+    padding-top: 8px;
+  }
+}
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  color: #1a1a1a; /* Soft black */
+  font-size: 20px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  font-size: 18px; /* Smaller size */
+  margin-right: 6px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  display: inline-block;
+  line-height: 1;
 }

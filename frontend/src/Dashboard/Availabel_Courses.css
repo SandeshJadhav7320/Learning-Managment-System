@@ -30,13 +30,21 @@
 .course-card {
   background-color: #0d0d0d;
   border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 25px;
-  width: calc(33.333% - 20px); /* 3 cards per row, minus the gap */
+  border-radius: 10px;
+  padding: 30px;
+  width: calc(50% - 20px); /* 2 cards per row instead of 3 */
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+  font-size: 18px; /* Optional: increase font size inside card */
 }
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Popup overlay covering the entire page */
 .popup-overlay {

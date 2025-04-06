@@ -1,60 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./LogoutPage.css";
 import { useNavigate } from "react-router-dom";
-import "./LogoutPage.css"; // Import your styling for the profile page
+import { FaUserCircle } from "react-icons/fa";
 
 const LogoutPage = () => {
   const [student, setStudent] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const studentName = localStorage.getItem("studentName");
-    const studentEmail = localStorage.getItem("studentEmail");
-    const studentId = localStorage.getItem("studentid");
+    const email = localStorage.getItem("studentEmail");
 
-    if (studentName && studentEmail && studentId) {
-      setStudent({ name: studentName, email: studentEmail, studentid: studentId });
-      setLoading(false);
-    } else {
-      setError("No student data found. Please log in.");
-      setLoading(false);
+    if (!email || email === "null" || email === "") {
+      console.warn("No valid email found. Redirecting to login...");
+      localStorage.clear();
+      navigate("/");
+      return;
     }
-  }, []);
+
+    axios
+      .get(`http://localhost:8080/student/profile?email=${email}`)
+      .then((res) => {
+        setStudent(res.data);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch profile:", err);
+      });
+  }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("studentName");
-    localStorage.removeItem("studentid");
-    localStorage.removeItem("studentEmail");
-    navigate("/login"); // Redirect to login after logout
+    localStorage.clear();
+    navigate("/");
   };
 
-  if (loading) {
-    return <p>Loading profile...</p>;
-  }
-
-  if (error) {
-    return (
-      <div>
-        <p>{error}</p>
-        <button onClick={() => navigate("/login")}>Go to Login</button>
-      </div>
-    );
-  }
+  if (!student) return <p className="loading">Loading...</p>;
 
   return (
     <div className="profile-container">
-      <div className="profile-box">
-        <h2>Student Profile</h2>
-        <div className="profile-details">
-          <p><strong>Name:</strong> {student.name}</p>
-          <p><strong>Email:</strong> {student.email}</p>
-          <p><strong>Student ID:</strong> {student.studentid}</p>
-        </div>
-        <button className="btn btn-danger" onClick={handleLogout}>
-          Logout
-        </button>
+      <div className="profile-card">
+        <FaUserCircle size={90} className="user-icon" />
+        <h2>{student.studentname}</h2>
+        <p><strong>Email:</strong> {student.email}</p>
+        <p><strong>Role:</strong> Student</p>
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );

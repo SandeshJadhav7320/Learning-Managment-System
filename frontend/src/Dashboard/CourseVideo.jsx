@@ -1,53 +1,77 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./CourseVideo.css"; // Import CSS for styling
+import "./CourseVideo.css";
 
 const CourseVideo = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [videoUrl, setVideoUrl] = useState(null);
+  const [videoUrls, setVideoUrls] = useState([]);
+  const [currentVideo, setCurrentVideo] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let url = location.state?.videoUrl || localStorage.getItem("videoUrl");
+    let urls = location.state?.videoUrls;
 
-    if (!url) {
-      console.warn("⚠️ No video URL received! Redirecting...");
-      setTimeout(() => navigate("/available-courses"), 2000); // Redirect after 2 sec
+    if (!urls) {
+      const stored = localStorage.getItem("videoUrls");
+      urls = stored ? JSON.parse(stored) : null;
+    }
+
+    if (!urls || urls.length === 0) {
+      console.warn("⚠️ No video URLs received! Redirecting...");
+      setTimeout(() => navigate("/available-courses"), 2000);
       return;
     }
 
-    console.log("📌 Received Video URL:", url);
+    const formattedUrls = urls.map((url) =>
+      url.startsWith("http") ? url : `http://localhost:8080${url}`
+    );
 
-    // Ensure URL starts with "http" (handling local storage paths)
-    if (!url.startsWith("http")) {
-      url = `http://localhost:8080${url}`;
-    }
-
-    // Save it in localStorage to persist across refreshes
-    localStorage.setItem("videoUrl", url);
-    setVideoUrl(url);
+    localStorage.setItem("videoUrls", JSON.stringify(formattedUrls));
+    setVideoUrls(formattedUrls);
+    setCurrentVideo(formattedUrls[0]);
     setLoading(false);
   }, [location, navigate]);
 
+  const handleVideoClick = (url) => {
+    setCurrentVideo(url);
+  };
+
   return (
-    <div className="video-container">
-      <h2>Course Video</h2>
+    <div className="course-video-wrapper">
+      {/* Playlist Section */}
+      <div className="playlist-section">
+        <h3>📚 Course Content</h3>
+        <ul>
+          {videoUrls.map((url, index) => (
+            <li
+              key={index}
+              className={url === currentVideo ? "active" : ""}
+              onClick={() => handleVideoClick(url)}
+            >
+              🎬 Video {index + 1}
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      {loading ? (
-        <div className="spinner"></div> // ✅ Loading spinner
-      ) : videoUrl ? (
-        <video controls className="video-player">
-          <source src={videoUrl} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      ) : (
-        <p className="error-text">⚠️ No video available for this course.</p>
-      )}
+      {/* Video Player Section */}
+      <div className="video-section">
+        {loading ? (
+          <div className="spinner"></div>
+        ) : currentVideo ? (
+          <video controls className="video-player">
+            <source src={currentVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <p>⚠️ No video available.</p>
+        )}
 
-      <button className="back-btn" onClick={() => navigate("/available-courses")}>
-        🔙 Back to Courses
-      </button>
+        <button className="back-btn" onClick={() => navigate("/available-courses")}>
+          🔙 Back to Courses
+        </button>
+      </div>
     </div>
   );
 };

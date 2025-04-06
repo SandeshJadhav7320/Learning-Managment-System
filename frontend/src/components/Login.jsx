@@ -15,7 +15,9 @@ function Login() {
     localStorage.setItem("authToken", token || "");
     localStorage.setItem("studentName", studentname || ""); 
     localStorage.setItem("studentid", studentid.toString());
-    localStorage.setItem("studentEmail", email || "");
+    localStorage.setItem("studentEmail", email || ""); // ✅ match this key in both files
+
+
   };
   
 
