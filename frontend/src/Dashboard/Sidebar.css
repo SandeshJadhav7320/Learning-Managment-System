@@ -3,43 +3,60 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 12px 30px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 16px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   z-index: 999;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0 0 16px 16px;
+  animation: slideDown 0.4s ease-out;
   box-sizing: border-box;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Slide-down animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .navbar-logo {
   display: flex;
   align-items: center;
-  color: #1a1a1a; /* Soft black */
-  font-size: 20px;
+  color: #d4d4e0;
+  font-size: 22px;
   font-weight: bold;
-  flex-shrink: 0;
 }
 
 .logo-icon {
-  font-size: 22px;
-  margin-right: 8px;
+  font-size: 24px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  color: #090a0a; /* Optional: Accent color */
+}
+.logo-icon:hover {
+  color: #ff5733; /* Changes to orange on hover */
+  transition: color 0.3s ease;
 }
 
-.logo-text {
-  display: inline-block;
-}
 
 .navbar-links {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
   margin: 0;
   padding: 0;
   margin-left: auto;
@@ -51,29 +68,22 @@
 }
 
 .navbar-links a {
-  color: #1a1a1a; /* Soft black */
+  color: #090808;
   text-decoration: none;
   font-size: 16px;
-  padding: 6px 14px;
-  border-radius: 5px;
+  padding: 8px 16px;
+  border-radius: 8px;
   transition: all 0.3s ease;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
+  font-weight: 500;
 }
 
 .navbar-links .active-link,
 .navbar-links a:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #000000;
+  background-color: rgba(0, 123, 255, 0.2);
+  color: #00bfff;
 }
 
-.icon {
-  margin-right: 6px;
-  vertical-align: middle;
-}
-
-/* Responsive behavior */
+/* Responsive for mobile */
 @media screen and (max-width: 480px) {
   .navbar {
     flex-direction: column;
@@ -84,27 +94,7 @@
   .navbar-links {
     justify-content: center;
     gap: 12px;
-    padding-top: 8px;
+    padding-top: 10px;
+    width: 100%;
   }
-}
-.navbar-logo {
-  display: flex;
-  align-items: center;
-  color: #1a1a1a; /* Soft black */
-  font-size: 20px;
-  font-weight: bold;
-  flex-shrink: 0;
-}
-
-.logo-icon {
-  font-size: 18px; /* Smaller size */
-  margin-right: 6px;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-}
-
-.logo-text {
-  display: inline-block;
-  line-height: 1;
 }

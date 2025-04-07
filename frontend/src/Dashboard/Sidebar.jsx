@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaGraduationCap } from 'react-icons/fa';
+import { FaGraduationCap } from 'react-icons/fa';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faBook, faList, faUser } from "@fortawesome/free-solid-svg-icons";
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -15,9 +17,7 @@ const Sidebar = () => {
           <NavLink
             to="/student-dashboard/home"
             className={({ isActive }) => (isActive ? 'active-link' : '')}
-          >
-          
-            Home 
+          ><FontAwesomeIcon icon={faHome} />  Home 
           </NavLink>
         </li>
         <li>
@@ -25,7 +25,7 @@ const Sidebar = () => {
             to="/student-dashboard/courses"
             className={({ isActive }) => (isActive ? 'active-link' : '')}
           >
-            Courses
+            <FontAwesomeIcon icon={faBook} />  Courses
           </NavLink>
         </li>
         <li>
@@ -33,7 +33,7 @@ const Sidebar = () => {
             to="/student-dashboard/availabel_courses"
             className={({ isActive }) => (isActive ? 'active-link' : '')}
           >
-            Available Courses
+            <FontAwesomeIcon icon={faList} />  Available Courses
           </NavLink>
         </li>
         <li>
@@ -41,7 +41,7 @@ const Sidebar = () => {
             to="/student-dashboard/logout"
             className={({ isActive }) => (isActive ? 'active-link' : '')}
           >
-            Profile
+            <FontAwesomeIcon icon={faUser} />  Profile
           </NavLink>
         </li>
       </ul>

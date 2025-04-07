@@ -34,7 +34,10 @@ const CourseVideo = () => {
   }, [location, navigate]);
 
   const handleVideoClick = (url) => {
-    setCurrentVideo(url);
+    if (url !== currentVideo) {
+      setCurrentVideo(null); // Force re-render
+      setTimeout(() => setCurrentVideo(url), 100); // Smooth transition
+    }
   };
 
   return (
@@ -49,7 +52,10 @@ const CourseVideo = () => {
               className={url === currentVideo ? "active" : ""}
               onClick={() => handleVideoClick(url)}
             >
-              🎬 Video {index + 1}
+              <div className="video-thumbnail">🎞️</div>
+              <div className="video-info">
+                <span className="video-title">Video {index + 1}</span>
+              </div>
             </li>
           ))}
         </ul>
@@ -60,7 +66,12 @@ const CourseVideo = () => {
         {loading ? (
           <div className="spinner"></div>
         ) : currentVideo ? (
-          <video controls className="video-player">
+          <video
+            key={currentVideo}
+            controls
+            className="video-player"
+            autoPlay
+          >
             <source src={currentVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
