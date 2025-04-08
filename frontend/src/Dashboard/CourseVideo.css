@@ -164,4 +164,27 @@
     position: static;
     margin-top: 20px;
   }
+  .video-checkbox {
+    margin-right: 16px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    accent-color: #c5c4cf; /* Matches your theme */
+    border-radius: 8px;
+  }
+  
+
+  .playlist-section li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background-color: #2c2f36;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  
 }

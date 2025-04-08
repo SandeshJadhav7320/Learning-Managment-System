@@ -46,19 +46,25 @@ const CourseVideo = () => {
       <div className="playlist-section">
         <h3>📚 Course Content</h3>
         <ul>
-          {videoUrls.map((url, index) => (
-            <li
-              key={index}
-              className={url === currentVideo ? "active" : ""}
-              onClick={() => handleVideoClick(url)}
-            >
-              <div className="video-thumbnail">🎞️</div>
-              <div className="video-info">
-                <span className="video-title">Video {index + 1}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
+  {videoUrls.map((url, index) => (
+    <li
+      key={index}
+      className={url === currentVideo ? "active" : ""}
+      onClick={() => handleVideoClick(url)}
+    >
+      <input
+        type="checkbox"
+        className="video-checkbox"
+        onClick={(e) => e.stopPropagation()} // Prevent toggling video when clicking checkbox
+      />
+      <div className="video-thumbnail">🎞️</div>
+      <div className="video-info">
+        <span className="video-title">Video {index + 1}</span>
+      </div>
+    </li>
+  ))}
+</ul>
+
       </div>
 
       {/* Video Player Section */}
@@ -79,7 +85,7 @@ const CourseVideo = () => {
           <p>⚠️ No video available.</p>
         )}
 
-        <button className="back-btn" onClick={() => navigate("/available-courses")}>
+        <button className="back-btn" onClick={() => navigate("/student-dashboard/availabel_courses")}>
           🔙 Back to Courses
         </button>
       </div>
