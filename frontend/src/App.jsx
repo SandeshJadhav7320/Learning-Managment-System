@@ -14,7 +14,7 @@ import Instructor_Add_Course from './Dashboard/Instructor_Add_Course';
 import Instructor_Logout from './Dashboard/Instructor_Logout';
 import LogoutPage from './Dashboard/LogoutPage';
 import InstructorCourses from './Dashboard/InstructorCourses';
-import CourseVideo from './Dashboard/CourseVideo';  // Import the new CourseVideo component
+import CourseVideo from './Dashboard/CourseVideo';
 
 const App = () => {
   return (
@@ -26,30 +26,27 @@ const App = () => {
 
         {/* Student Routes */}
         <Route path="/student-dashboard" element={<StudentDashboard />}>
+          <Route index element={<Student_Home />} /> {/* Default page */}
           <Route path="availabel_courses" element={<Availabel_Courses />} />
           <Route path="home" element={<Student_Home />} />
           <Route path="courses" element={<Student_Courses />} />
           <Route path="logout" element={<LogoutPage />} />
         </Route>
 
-        {/* Admin Routes */}
-        <Route path="/admin-dashboard" element={<AdminDashboard />}>
-          <Route path="home" element={<Student_Home />} />
-          <Route path="courses" element={<Student_Courses />} />
-          <Route path="logout" element={<Logout />} />
-        </Route>
-
         {/* Instructor Routes */}
         <Route path="/instructor-dashboard" element={<InstructorDashboard />}>
+          <Route index element={<Instructor_Home />} /> {/* Default page */}
           <Route path="instructorhome" element={<Instructor_Home />} />
           <Route path="addcourses" element={<Instructor_Add_Course />} />
           <Route path="instructorcourses" element={<InstructorCourses />} />
           <Route path="logout" element={<Instructor_Logout />} />
         </Route>
 
-        {/* New Route for Viewing Course Videos */}
-        <Route path="/course/:id" element={<CourseVideo />} />
+        {/* Admin Dashboard (if needed later) */}
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
 
+        {/* Course Video Route */}
+        <Route path="/course/:id" element={<CourseVideo />} />
       </Routes>
     </Router>
   );

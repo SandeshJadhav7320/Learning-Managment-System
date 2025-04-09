@@ -1,178 +1,168 @@
-/* Base style for the courses page */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
 .courses-page {
-  padding: 20px;
-  min-height: 100vh; /* Full height of the viewport */
-  overflow-y: auto; /* Enable vertical scrolling */
-  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
-}
-
-.courses-page::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
-}
-
-/* Title of the courses page */
-.courses-title {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #fff;
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 30px;
 }
 
-/* Container to hold all the course cards */
+.courses-title {
+  font-size: 36px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.search-input {
+  width: 300px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  margin-bottom: 30px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  transition: 0.3s;
+}
+
+.search-input::placeholder {
+  color: #ddd;
+}
+
+.search-input:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
 .courses-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px; /* Space between cards */
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
 }
 
-/* Styling each individual course card */
 .course-card {
-  background-color: #0d0d0d;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 30px;
-  width: calc(50% - 20px); /* 2 cards per row instead of 3 */
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  width: 220px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  color: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  margin-bottom: 20px;
-  font-size: 18px; /* Optional: increase font size inside card */
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .course-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
 }
 
+.course-card h2 {
+  font-size: 22px;
+  margin: 10px 0;
+  text-transform: capitalize;
+}
 
-/* Popup overlay covering the entire page */
+.course-card p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.course-image {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.enroll-btn {
+  margin-top: 12px;
+  background: #00aaff;
+  border: none;
+  padding: 10px 16px;
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.enroll-btn:hover {
+  background: #0077cc;
+}
+
+.enroll-btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align content to the top */
-  z-index: 1000; /* Ensure it appears above everything else */
-  padding-top: 20px; /* Add space from the top */
+  align-items: center;
+  z-index: 999;
 }
 
-/* Popup content styling */
 .popup-content {
-  background-color: #221f1f;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  width: 90%;
-  max-width: 400px;
-}
-
-/* Popup message text */
-.popup-content p {
-  font-size: 1rem;
-  margin-bottom: 20px;
-  color: #f6eded;
-}
-
-/* Close button styling */
-.popup-close-btn {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #15012f; /* Close button color */
-  color: rgb(237, 226, 226);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-/* Close button hover effect */
-.popup-close-btn:hover {
-  background-color: #5454d1;
-}
-
-
-
-
-/* Hover effect for course card */
-.course-card:hover {
-  transform: translateY(-10px);
-}
-
-/* Title of each course */
-.course-card h2 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-}
-
-/* Description of the course */
-.course-card p {
-  font-size: 1rem;
-  margin-bottom: 10px;
-}
-
-/* Enroll button */
-.enroll-btn {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #3498db;
+  background: linear-gradient(to right, #1e3c72, #2a5298);
   color: white;
+  padding: 25px 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.popup-close-btn {
+  margin-top: 15px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 5px;
+  background-color: #444;
+  color: white;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-/* Enroll button hover effect */
-.enroll-btn:hover {
-  background-color: #2980b9;
-}
-
-/* Responsive design for desktops (three cards per row) */
-@media (min-width: 1025px) {
-  .course-card {
-    width: calc(33.333% - 20px);
-  }
-}
-
-/* Responsive design for tablets (two cards per row) */
-@media (max-width: 1024px) {
-  .course-card {
-    width: calc(50% - 20px); /* Two cards per row */
-  }
-}
-
-/* Responsive design for small tablets and large phones */
-@media (max-width: 768px) {
-  .course-card {
-    width: calc(100% - 40px); /* Single card per row */
-    max-width: 400px; /* Keep a max-width */
-    margin: 0 auto; /* Center the card */
+/* Responsive Design */
+@media (max-width: 600px) {
+  .search-input {
+    width: 90%;
   }
 
   .courses-container {
-    gap: 10px; /* Reduce gap for smaller screens */
+    flex-direction: column;
+    align-items: center;
   }
-}
 
-/* Responsive design for very small devices (narrow phones) */
-@media (max-width: 480px) {
   .course-card {
-    padding: 15px;
-    width: calc(100% - 30px); /* Slightly smaller padding for very small screens */
-  }
-
-  .enroll-btn {
-    font-size: 0.9rem;
-    padding: 8px 15px; /* Smaller button for small screens */
-  }
-
-  .courses-title {
-    font-size: 1.5rem; /* Adjust title size */
+    width: 90%;
   }
 }

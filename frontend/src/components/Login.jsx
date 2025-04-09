@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Login.css"; 
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -10,50 +10,41 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Helper function to store session data in localStorage
-  const storeSessionData = (token, studentname, studentid, email) => {
+  const storeSessionData = (token, name, id, email) => {
     localStorage.setItem("authToken", token || "");
-    localStorage.setItem("studentName", studentname || ""); 
-    localStorage.setItem("studentid", studentid.toString());
-    localStorage.setItem("studentEmail", email || ""); // ✅ match this key in both files
-
-
+    localStorage.setItem("studentName", name || "");
+    localStorage.setItem("studentid", id?.toString() || "");
+    localStorage.setItem("studentEmail", email || "");
   };
-  
 
   async function login(event) {
     event.preventDefault();
     setLoading(true);
-    setError(""); 
-  
+    setError("");
+
     try {
-      const response = await axios.post("http://localhost:8080/student/login", { email, password });
-  
-      console.log("API Response:", response.data); 
-  
+      const response = await axios.post("http://localhost:8080/student/login", {
+        email,
+        password,
+      });
+
+      console.log("Full login response:", response.data);
+
       const { message, role, studentname, studentid, token } = response.data;
 
-      // Ensure studentid exists before proceeding
       if (!studentid) {
-        console.error("Student ID is missing from API response:", response.data);
-        setError("Error: Student ID not found in response.");
+        console.error("❌ Student ID is missing from API response.");
+        setError("Student ID missing in response.");
         return;
       }
 
       if (message === "Login success") {
-        // Store session data in localStorage
         storeSessionData(token, studentname, studentid, email);
 
-        console.log("Stored Student ID:", localStorage.getItem("studentid")); 
-        console.log("Stored data:", {
-          token,
-          studentname,
-          studentid,
-          email,
-        });
+        console.log("✅ Login successful");
+        console.log("Role received:", role);
 
-        // Navigate based on role
-        switch (role) {
+        switch (role?.toLowerCase()) {
           case "student":
             navigate("/student-dashboard");
             break;
@@ -64,6 +55,7 @@ function Login() {
             navigate("/admin-dashboard");
             break;
           default:
+            console.warn("⚠️ Unknown role:", role);
             setError("Invalid role received. Contact support.");
         }
       } else {
@@ -109,12 +101,18 @@ function Login() {
             />
           </div>
           {error && <p className="text-danger text-center">{error}</p>}
-          <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loading}
+          >
             {loading ? "Logging in..." : "Login"}
           </button>
           <p className="text-center mt-3">
             Don't have an account?{" "}
-            <Link to="/Registration" className="register-link">Register here</Link>
+            <Link to="/Registration" className="register-link">
+              Register here
+            </Link>
           </p>
         </form>
       </div>

@@ -1,0 +1,53 @@
+.instructor-navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #c0392b, #e74c3c);
+    padding: 20px 80px; /* Increased padding */
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar-logo {
+    font-size: 26px; /* Bigger logo text */
+    font-weight: bold;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 40px; /* More spacing between links */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-links li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px; /* Bigger text */
+    padding: 12px 18px; /* Increased padding */
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .navbar-links li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .active-link {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  

@@ -7,12 +7,11 @@ function InstructorDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the token is present in localStorage
-    const token = localStorage.getItem('token');
+    // ✅ Corrected key name to match what's saved in Login.jsx
+    const token = localStorage.getItem('authToken');
 
-    // If the token is not found, redirect to the login page
     if (!token) {
-      navigate("/login"); // Redirect to login page
+    
     }
   }, [navigate]);
 

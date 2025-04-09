@@ -1,9 +1,9 @@
-// src/pages/Courses.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Courses = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const studentId = localStorage.getItem("studentid");
   const navigate = useNavigate();
 
@@ -29,16 +29,29 @@ const Courses = () => {
 
   const handleGoToCourse = (course) => {
     navigate(`/course/${course.id}`, {
-      state: { videoUrls: course.videoUrls } // Send all videos of the course
+      state: { videoUrls: course.videoUrls }
     });
   };
+
+  const filteredEnrolledCourses = enrolledCourses.filter(course =>
+    course.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="courses-page">
       <h1 className="courses-title">My Enrolled Courses</h1>
+
+      <input
+        type="text"
+        placeholder="Search enrolled courses..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-input"
+      />
+
       <div className="courses-container">
-        {enrolledCourses.length > 0 ? (
-          enrolledCourses.map((course) => (
+        {filteredEnrolledCourses.length > 0 ? (
+          filteredEnrolledCourses.map((course) => (
             <div className="course-card" key={course.id}>
               <div className="course-info">
                 <h2>{course.name}</h2>
