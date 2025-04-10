@@ -1,17 +1,22 @@
 .instructor-navbar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to right, #c0392b, #e74c3c);
-    padding: 20px 80px; /* Increased padding */
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    color: #fff;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0 0 16px 16px;
+  animation: slideDown 0.4s ease-out;
+  box-sizing: border-box;
   }
   
   .navbar-logo {
@@ -50,4 +55,8 @@
   .active-link {
     background-color: rgba(0, 0, 0, 0.3);
   }
+  .main-content {
+    padding-top: 70px; /* Adjust based on your navbar height */
+  }
+  
   

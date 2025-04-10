@@ -1,5 +1,7 @@
 package com.example.lms.StudentController;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.lms.Dto.LoginDTO;
 import com.example.lms.Dto.StudentDTO;
+import com.example.lms.Entity.Student;
+import com.example.lms.Repo.StudentRepo;
 import com.example.lms.Response.LoginResponse;
 import com.example.lms.Service.StudentServices;
 
@@ -18,34 +22,28 @@ public class StudentController {
     @Autowired
     private StudentServices studentServices;
 
-    // Save a new student
+    @Autowired
+    private StudentRepo studentRepository; // ✅ FIXED
+
     @PostMapping(path = "/save")
     public String saveStudent(@RequestBody StudentDTO studentDto) {
-        String id = studentServices.addStudent(studentDto);
-        return id;
+        return studentServices.addStudent(studentDto);
     }
 
-    // Login for student
     @PostMapping(path = "/login")
     public ResponseEntity<?> loginStudent(@RequestBody LoginDTO loginDto) {
         LoginResponse loginResponse = studentServices.loginStudent(loginDto);
-
         if (loginResponse.isStatus()) {
-            return ResponseEntity.ok(loginResponse); // 200 OK
+            return ResponseEntity.ok(loginResponse);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse); // 401 Unauthorized
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse);
         }
     }
 
-    // Fetch logged-in student profile (Frontend must send email)
-    @GetMapping(path = "/profile")
-    public ResponseEntity<?> getStudentProfile(@RequestParam String email) {
-        StudentDTO student = studentServices.getStudentByEmail(email);
-        
-        if (student != null) {
-            return ResponseEntity.ok(student); // 200 OK with student details
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student not found for email: " + email); // 404 Not Found
-        }
+    @GetMapping("/profile") // ✅ FIXED endpoint
+    public ResponseEntity<Student> getStudentByEmail(@RequestParam String email) {
+        Optional<Student> optionalStudent = studentRepository.findByEmail(email);
+        return optionalStudent.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 }

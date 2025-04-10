@@ -10,11 +10,12 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const storeSessionData = (token, name, id, email) => {
+  const storeSessionData = (token, name, id, email, role) => {
     localStorage.setItem("authToken", token || "");
-    localStorage.setItem("studentName", name || "");
-    localStorage.setItem("studentid", id?.toString() || "");
-    localStorage.setItem("studentEmail", email || "");
+    localStorage.setItem("userName", name || "");
+    localStorage.setItem("userId", id?.toString() || "");
+    localStorage.setItem("userEmail", email || "");
+    localStorage.setItem("userRole", role || "");
   };
 
   async function login(event) {
@@ -32,14 +33,14 @@ function Login() {
 
       const { message, role, studentname, studentid, token } = response.data;
 
-      if (!studentid) {
-        console.error("❌ Student ID is missing from API response.");
-        setError("Student ID missing in response.");
+      if (!studentid || !studentname) {
+        console.error("❌ Missing student ID or name from API response.");
+        setError("Missing details in response.");
         return;
       }
 
       if (message === "Login success") {
-        storeSessionData(token, studentname, studentid, email);
+        storeSessionData(token, studentname, studentid, email, role);
 
         console.log("✅ Login successful");
         console.log("Role received:", role);

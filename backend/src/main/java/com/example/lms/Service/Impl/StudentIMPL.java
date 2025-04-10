@@ -38,19 +38,25 @@ public class StudentIMPL implements StudentServices {
     }
 
     @Override
+    
     public LoginResponse loginStudent(LoginDTO loginDto) {
         Optional<Student> optionalStudent = studentRepo.findByEmail(loginDto.getEmail());
 
         if (optionalStudent.isPresent()) {
-            Student student1 = optionalStudent.get();
+            Student user = optionalStudent.get();
             String password = loginDto.getPassword();
-            String encodedPassword = student1.getPassword();
-            Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
+            String encodedPassword = user.getPassword();
+            boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
 
             if (isPwdRight) {
-                String role = student1.getRole();
-                int studentid = student1.getStudentid(); // ✅ Get student ID
-                return new LoginResponse("Login success", true, role, studentid);
+                String role = user.getRole();
+                return new LoginResponse(
+                    "Login success",
+                    true,
+                    role,
+                    user.getStudentid(),
+                    user.getStudentname()  // ✅ sending back the name
+                );
             } else {
                 return new LoginResponse("Password Not Match", false);
             }
@@ -58,6 +64,7 @@ public class StudentIMPL implements StudentServices {
             return new LoginResponse("Email not exist", false);
         }
     }
+
 
 
     // Implement the method to fetch student by email

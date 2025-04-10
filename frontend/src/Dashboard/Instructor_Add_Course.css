@@ -1,10 +1,11 @@
 .instructor-page {
-    max-width: 1000px; /* Increase the width of the form */
-    margin: 20px auto;
-    padding: 30px; /* Add some padding for better spacing */
-    background-color: #111010;
-    border-radius: 8px;
-  }
+  max-width: 1000px;
+  margin: 100px auto 20px auto; /* Increased top margin to push content down */
+  padding: 30px;
+  background-color: #111010;
+  border-radius: 8px;
+}
+
   
   .instructor-page h2 {
     text-align: center;

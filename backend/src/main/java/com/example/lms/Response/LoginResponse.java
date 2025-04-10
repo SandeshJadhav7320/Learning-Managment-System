@@ -1,21 +1,23 @@
 package com.example.lms.Response;
 
 public class LoginResponse {
-    
+
     private String message;
     private boolean status;
     private String role;
-    private int studentid; // ✅ Add student ID
+    private int studentid;
+    private String studentname; // ✅ New field to store instructor or student name
 
-    // Constructor with studentid
-    public LoginResponse(String message, boolean status, String role, int studentid) {
+    // Constructor with name
+    public LoginResponse(String message, boolean status, String role, int studentid, String studentname) {
         this.message = message;
         this.status = status;
         this.role = role;
         this.studentid = studentid;
+        this.studentname = studentname;
     }
 
-    // Constructor without studentid for error cases
+    // Constructor without name (for failure)
     public LoginResponse(String message, boolean status) {
         this.message = message;
         this.status = status;
@@ -54,8 +56,17 @@ public class LoginResponse {
         this.studentid = studentid;
     }
 
+    public String getStudentname() {
+        return studentname;
+    }
+
+    public void setStudentname(String studentname) {
+        this.studentname = studentname;
+    }
+
     @Override
     public String toString() {
-        return "LoginResponse [message=" + message + ", status=" + status + ", role=" + role + ", studentid=" + studentid + "]";
+        return "LoginResponse [message=" + message + ", status=" + status + ", role=" + role +
+               ", studentid=" + studentid + ", studentname=" + studentname + "]";
     }
 }
