@@ -19,11 +19,13 @@
 }
 
 /* Title styling */
-h1 {
+.instructor-heading {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
 }
+
+
 
 /* Container for course cards */
 .courses-container {
@@ -36,15 +38,17 @@ h1 {
 
 /* Styling for individual course cards */
 .course-card {
-  background-color: #0d0d0d;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  width: 220px; /* increase this value to make cards wider */
   padding: 15px;
-  width: calc(33.333% - 20px); /* 3 cards per row, minus the gap */
+  background-color: #000; /* or whatever background you're using */
+  color: white;
+  border-radius: 8px;
+  border: 1px solid white;
+  margin: 10px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
 }
+
+
 
 /* Hover effect for course cards */
 .course-card:hover {
@@ -53,6 +57,7 @@ h1 {
 
 /* Button styling */
 button {
+  margin-top: 10px;
   padding: 10px 20px;
   background-color: #f44336;
   color: white;
@@ -60,7 +65,10 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%; /* Full width for consistency */
+  box-sizing: border-box;
 }
+
 
 button:hover {
   background-color: #d32f2f;

@@ -31,7 +31,7 @@ const Instructor_Sidebar = () => {
         <li>
           <NavLink to="/instructor-dashboard/logout" className={({ isActive }) => (isActive ? 'active-link' : '')}>
             <LogOut size={18} style={{ marginRight: '6px' }} />
-            Logout
+            Profile
           </NavLink>
         </li>
       </ul>

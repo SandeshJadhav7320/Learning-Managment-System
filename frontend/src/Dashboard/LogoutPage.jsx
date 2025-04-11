@@ -9,15 +9,15 @@ const LogoutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const email = localStorage.getItem("studentEmail");
-
+    const email = localStorage.getItem("userEmail"); // <--- updated key name
+  
     if (!email || email === "null" || email === "") {
       console.warn("No valid email found. Redirecting to login...");
       localStorage.clear();
       navigate("/");
       return;
     }
-
+  
     axios
       .get(`http://localhost:8080/student/profile?email=${email}`)
       .then((res) => {
@@ -27,7 +27,7 @@ const LogoutPage = () => {
         console.error("Failed to fetch profile:", err);
       });
   }, [navigate]);
-
+  
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
