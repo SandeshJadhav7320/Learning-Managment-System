@@ -27,7 +27,7 @@ const Availabel_Courses = () => {
   }, []);
 
   const handleEnroll = async (courseId) => {
-    const studentId = localStorage.getItem("studentid");
+    const studentId = localStorage.getItem("studentId");
     if (!studentId) {
       alert("Student ID is missing. Please log in again.");
       return;

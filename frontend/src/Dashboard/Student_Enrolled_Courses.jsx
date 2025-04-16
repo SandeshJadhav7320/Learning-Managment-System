@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 const Courses = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const studentId = localStorage.getItem("studentid");
+  const studentId = localStorage.getItem("studentId");
+
   const navigate = useNavigate();
 
   useEffect(() => {

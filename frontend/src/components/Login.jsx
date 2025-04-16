@@ -13,7 +13,7 @@ function Login() {
   const storeSessionData = (token, name, id, email, role) => {
     localStorage.setItem("authToken", token || "");
     localStorage.setItem("userName", name || "");
-    localStorage.setItem("userId", id?.toString() || "");
+    localStorage.setItem("studentId", id?.toString() || ""); // ✅ updated this line
     localStorage.setItem("userEmail", email || "");
     localStorage.setItem("userRole", role || "");
   };
