@@ -1,20 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Student_Home from './Dashboard/Student_Home';
-import Student_Courses from './Dashboard/Student_Enrolled_Courses'; 
+import Student_Courses from './Dashboard/Student_Enrolled_Courses';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import StudentDashboard from './Dashboard/StudentDashboard';
-import Logout from './Dashboard/LogoutPage';
+import LogoutPage from './Dashboard/LogoutPage';
 import AdminDashboard from './Dashboard/AdminDashboard';
 import Availabel_Courses from './Dashboard/Availabel_Courses';
 import InstructorDashboard from './Dashboard/InstructorDashboard';
 import Instructor_Home from './Dashboard/Instructor_Home';
 import Instructor_Add_Course from './Dashboard/Instructor_Add_Course';
 import Instructor_Logout from './Dashboard/Instructor_Logout';
-import LogoutPage from './Dashboard/LogoutPage';
 import InstructorCourses from './Dashboard/InstructorCourses';
 import CourseVideo from './Dashboard/CourseVideo';
+import EnrollmentForm from './Dashboard/EnrollmentForm'; // Import the Enrollment Form component
 
 const App = () => {
   return (
@@ -31,6 +31,8 @@ const App = () => {
           <Route path="home" element={<Student_Home />} />
           <Route path="courses" element={<Student_Courses />} />
           <Route path="logout" element={<LogoutPage />} />
+          {/* Route for Enrollment Form */}
+          <Route path="enroll/:courseId" element={<EnrollmentForm />} />
         </Route>
 
         {/* Instructor Routes */}

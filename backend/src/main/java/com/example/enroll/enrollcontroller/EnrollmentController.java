@@ -24,11 +24,14 @@ public class EnrollmentController {
     @PostMapping
     public ResponseEntity<?> enrollStudent(@RequestBody EnrollmentRequest request) {
         try {
-            if (request.getStudentId() == null || request.getCourseId() == null) {
-                throw new RuntimeException("Student ID and Course ID are required.");
+            if (request.getStudentId() == null || request.getCourseId() == null || request.getStudentName() == null 
+                || request.getQualification() == null || request.getAddress() == null) {
+                throw new RuntimeException("All fields are required.");
             }
 
-            enrollmentService.enrollStudent(request.getStudentId(), request.getCourseId());
+            enrollmentService.enrollStudent(request.getStudentId(), request.getCourseId(), request.getStudentName(), 
+                    request.getQualification(), request.getAddress());
+
             return ResponseEntity.ok(new ApiResponse(true, "Enrollment successful!"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(false, "Error: " + e.getMessage()));
@@ -41,7 +44,6 @@ public class EnrollmentController {
         List<Course> enrolledCourses = enrollmentService.getEnrolledCoursesByStudentId(studentId);
         return ResponseEntity.ok(enrolledCourses);
     }
-
 
     // ✅ Fetch enrollment by ID (Fix for your issue)
     @GetMapping("/{id}")

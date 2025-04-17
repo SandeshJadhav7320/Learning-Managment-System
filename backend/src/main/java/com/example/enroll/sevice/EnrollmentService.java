@@ -25,7 +25,8 @@ public class EnrollmentService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public void enrollStudent(Long studentId, Long courseId) {
+    // Updated enrollStudent method to handle new fields
+    public void enrollStudent(Long studentId, Long courseId, String studentName, String qualification, String address) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
@@ -36,10 +37,17 @@ public class EnrollmentService {
             throw new RuntimeException("You are already enrolled in this course.");
         }
 
+        // Creating a new enrollment object with additional student details
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
         enrollment.setCourse(course);
         enrollment.setEnrollmentDate(LocalDateTime.now());
+        
+        // Set additional student details in the Enrollment entity (if needed)
+        enrollment.setStudentName(studentName);
+        enrollment.setQualification(qualification);
+        enrollment.setAddress(address);
+
         enrollmentRepository.save(enrollment);
     }
 

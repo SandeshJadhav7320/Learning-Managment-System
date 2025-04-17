@@ -7,13 +7,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
-public class SecurityConnfig implements WebMvcConfigurer {  // ✅ Implement WebMvcConfigurer
+public class SecurityConnfig implements WebMvcConfigurer {
 
     // ✅ Password Encoder
     @Bean
@@ -21,43 +25,42 @@ public class SecurityConnfig implements WebMvcConfigurer {  // ✅ Implement Web
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    // ✅ Security Configuration
+    // ✅ Spring Security Configuration
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())  // 🔥 Disable CSRF for API calls
-                .cors(cors -> cors.configurationSource(request -> new org.springframework.web.cors.CorsConfiguration().applyPermitDefaultValues()))  // 🔥 Enable CORS properly
+                .csrf(csrf -> csrf.disable()) // 🔥 Disable CSRF for APIs
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Use our custom CORS config
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/student/**").permitAll()
                         .requestMatchers("/instructor/**").permitAll()
                         .requestMatchers("/enrollment/**").permitAll()
-                        .requestMatchers("/uploads/**").permitAll()  // ✅ Allow access to uploaded videos
-                        .requestMatchers("/static/**", "/resources/**").permitAll() // ✅ Allow other static resources
+                        .requestMatchers("/uploads/**").permitAll()
+                        .requestMatchers("/static/**", "/resources/**").permitAll()
                         .requestMatchers("/student/profile").authenticated()
-                        .anyRequest().authenticated() // Require authentication for all other requests
+                        .anyRequest().authenticated()
                 )
                 .build();
     }
 
-    // ✅ CORS Configuration
+    // ✅ Custom CORS Configuration Source (Spring Security-friendly)
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173", "http://localhost:3000") // ✅ Allow frontend access
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
-            }
-        };
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Your frontend
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
-    // ✅ Static Resource Configuration (Enables Video Access)
+    // ✅ Static Resource Mapping
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/uploads/**")  // ✅ Maps "/uploads/**" to actual folder
+        registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:uploads/");
     }
 }

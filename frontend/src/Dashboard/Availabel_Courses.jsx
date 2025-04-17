@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import EnrollmentForm from "./EnrollmentForm";  // Import the new EnrollmentForm component
 import "./Availabel_Courses.css";
 
 const Availabel_Courses = () => {
@@ -8,6 +9,10 @@ const Availabel_Courses = () => {
   const [popupMessage, setPopupMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // State for the enrollment form visibility
+  const [showEnrollmentForm, setShowEnrollmentForm] = useState(false);
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -26,26 +31,38 @@ const Availabel_Courses = () => {
     Promise.all([fetchCourses()]).finally(() => setLoading(false));
   }, []);
 
-  const handleEnroll = async (courseId) => {
+  const handleEnroll = (courseId) => {
     const studentId = localStorage.getItem("studentId");
     if (!studentId) {
       alert("Student ID is missing. Please log in again.");
       return;
     }
 
-    const confirmEnrollment = window.confirm("Do you want to enroll in this course?");
-    if (!confirmEnrollment) return;
+    setSelectedCourseId(courseId);
+    setShowEnrollmentForm(true); // Show the form to fill out enrollment details
+  };
 
+  const handleFormSubmit = async (courseId, studentId, enrollmentDetails) => {
     try {
       const response = await fetch("http://localhost:8080/enrollment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ studentId: Number(studentId), courseId }),
+        body: JSON.stringify({
+          studentId: Number(studentId),
+          courseId,
+          studentName: enrollmentDetails.studentName,
+          qualification: enrollmentDetails.qualification,
+          address: enrollmentDetails.address,
+        }),
       });
 
       const data = await response.json();
-      setPopupMessage(data.message);
-      setEnrolledCourses((prev) => new Set([...prev, courseId]));
+      if (data.success) {
+        setPopupMessage("Enrollment successful!");
+        setEnrolledCourses((prev) => new Set([...prev, courseId]));
+      } else {
+        setPopupMessage("An error occurred. Please try again.");
+      }
     } catch (error) {
       console.error("Error during enrollment:", error);
       setPopupMessage("An error occurred. Please try again.");
@@ -99,6 +116,17 @@ const Availabel_Courses = () => {
           </div>
         ))}
       </div>
+
+      {showEnrollmentForm && (
+        <div className="enrollment-modal-overlay">
+          <EnrollmentForm
+            courseId={selectedCourseId}
+            studentId={localStorage.getItem("studentId")}
+            onSubmit={handleFormSubmit}
+            closeForm={() => setShowEnrollmentForm(false)}
+          />
+        </div>
+      )}
 
       {showPopup && (
         <div className="popup-overlay">
