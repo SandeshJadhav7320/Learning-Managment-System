@@ -30,20 +30,7 @@ public class Enrollment {
 
     private LocalDateTime enrollmentDate;
 
-    // Additional fields for student details
-    private String studentName;
-    private String qualification;
-    private String address;
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    // Getter and Setter for Student
     public Student getStudent() {
         return student;
     }
@@ -52,6 +39,7 @@ public class Enrollment {
         this.student = student;
     }
 
+    // Getter and Setter for Course
     public Course getCourse() {
         return course;
     }
@@ -60,6 +48,7 @@ public class Enrollment {
         this.course = course;
     }
 
+    // Getter and Setter for Enrollment Date
     public LocalDateTime getEnrollmentDate() {
         return enrollmentDate;
     }
@@ -68,27 +57,12 @@ public class Enrollment {
         this.enrollmentDate = enrollmentDate;
     }
 
-    public String getStudentName() {
-        return studentName;
+    // Getter and Setter for ID
+    public Long getId() {
+        return id;
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public String getQualification() {
-        return qualification;
-    }
-
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setId(Long id) {
+        this.id = id;
     }
 }
