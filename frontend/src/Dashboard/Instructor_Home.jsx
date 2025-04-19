@@ -12,11 +12,11 @@ function Instructor_Home() {
   }, []);
 
   const handleAddCourse = () => {
-    navigate("/add-course");
+    navigate("/instructor-dashboard/studetnlist");
   };
 
   const handleViewCourses = () => {
-    navigate("/instructor-courses");
+    navigate("/instructor-dashboard/instructorcourses");
   };
 
   return (
@@ -28,7 +28,7 @@ function Instructor_Home() {
       </p>
       <div className="actions">
         <button className="btn" onClick={handleAddCourse}>
-          ➕ Add New Course
+          View Student List 
         </button>
         <button className="btn outline" onClick={handleViewCourses}>
           📚 View My Courses

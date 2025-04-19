@@ -1,0 +1,57 @@
+.student-list-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+   
+    
+   
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 20px;
+  }
+  
+  .student-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .student-table th,
+  .student-table td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .student-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .student-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .student-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .student-table td {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .student-table td[colspan="4"] {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+  }
+  

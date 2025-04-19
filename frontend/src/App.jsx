@@ -15,6 +15,7 @@ import Instructor_Logout from './Dashboard/Instructor_Logout';
 import InstructorCourses from './Dashboard/InstructorCourses';
 import CourseVideo from './Dashboard/CourseVideo';
 import EnrollmentForm from './Dashboard/EnrollmentForm'; // Import the Enrollment Form component
+import StudentList from './Dashboard/StudentList';
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="addcourses" element={<Instructor_Add_Course />} />
           <Route path="instructorcourses" element={<InstructorCourses />} />
           <Route path="logout" element={<Instructor_Logout />} />
+          <Route path="studetnlist" element={<StudentList />} />
         </Route>
 
         {/* Admin Dashboard (if needed later) */}
