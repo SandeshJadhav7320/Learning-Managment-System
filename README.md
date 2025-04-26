@@ -17,6 +17,7 @@ Built with React.js for the frontend and connected to a Node.js/Express backend
   - See list of students.
 
 ## ScreenShot
+
   ![image alt](https://github.com/SandeshJadhav7320/Learning-Managment-System/blob/7748ec5a9c4f4e35139a781961efcc7043f3c6f1/Screenshot.png)
 
 ## Tech Stack
