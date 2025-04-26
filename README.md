@@ -16,8 +16,7 @@ Built with React.js for the frontend and connected to a Node.js/Express backend
   - View and manage existing courses.
   - See list of students.
  
-## ScreenShot
-  ![image alt(https://github.com/SandeshJadhav7320/Learning-Managment-System/blob/f1d6203575db52de2b9f2ac6e58eaa03e61c3d37/Screenshot.png)]
+
 
 ## Tech Stack
 
