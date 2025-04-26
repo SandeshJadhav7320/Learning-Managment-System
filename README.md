@@ -46,5 +46,5 @@ Follow these steps to set up and run the project locally:
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/student-enrollment-system.git
-cd student-enrollment-system
+git clone https://github.com/SandeshJadhav7320/Learning-Managment-System.git
+cd Learning-Management-System
