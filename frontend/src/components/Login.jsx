@@ -13,7 +13,7 @@ function Login() {
   const storeSessionData = (token, name, id, email, role) => {
     localStorage.setItem("authToken", token || "");
     localStorage.setItem("userName", name || "");
-    localStorage.setItem("studentId", id?.toString() || ""); // ✅ updated this line
+    localStorage.setItem("studentId", id?.toString() || "");
     localStorage.setItem("userEmail", email || "");
     localStorage.setItem("userRole", role || "");
   };
@@ -29,8 +29,6 @@ function Login() {
         password,
       });
 
-      console.log("Full login response:", response.data);
-
       const { message, role, studentname, studentid, token } = response.data;
 
       if (!studentid || !studentname) {
@@ -41,10 +39,6 @@ function Login() {
 
       if (message === "Login success") {
         storeSessionData(token, studentname, studentid, email, role);
-
-        console.log("✅ Login successful");
-        console.log("Role received:", role);
-
         switch (role?.toLowerCase()) {
           case "student":
             navigate("/student-dashboard");
@@ -63,12 +57,7 @@ function Login() {
         setError("Incorrect email or password.");
       }
     } catch (err) {
-      console.error("Login error:", err);
-      if (err.response?.status === 401) {
-        setError("Unauthorized: Invalid email or password.");
-      } else {
-        setError("Server error. Please try again later.");
-      }
+      setError("Server error. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -116,6 +105,25 @@ function Login() {
             </Link>
           </p>
         </form>
+      </div>
+      
+      {/* Information Cards */}
+      <div className="info-cards">
+        <div className="card">
+          <i className="fas fa-graduation-cap"></i>
+          <h3>Course Management</h3>
+          <p>Access and manage courses easily with our intuitive LMS interface.</p>
+        </div>
+        <div className="card">
+          <i className="fas fa-chalkboard-teacher"></i>
+          <h3>Instructor Tools</h3>
+          <p>Empower instructors with tools to manage assignments, grades, and more.</p>
+        </div>
+        <div className="card">
+          <i className="fas fa-users"></i>
+          <h3>Community Learning</h3>
+          <p>Interact with students and faculty for a collaborative learning experience.</p>
+        </div>
       </div>
     </div>
   );

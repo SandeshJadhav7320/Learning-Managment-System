@@ -1,7 +1,7 @@
 /* Fullscreen background */
 .profile-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #161718);
+  
   display: flex;
   justify-content: center;
   align-items: center;

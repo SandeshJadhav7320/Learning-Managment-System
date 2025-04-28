@@ -1,177 +1,152 @@
+/* Body styling with a fresh gradient */
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(120deg, #1e2a47 0%, #4c5676 100%); /* Soft dark gradient */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #2C3E50, #4CA1AF); /* Subtle gradient for a calm feel */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }
 
+/* Login container styling */
 .login-container {
-  position: relative;
-  z-index: 10;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.login-box {
-  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
-  backdrop-filter: blur(10px); /* Blurred background effect */
-  border-radius: 12px;
-  padding: 40px 30px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4); /* Slightly darker shadow */
-  max-width: 400px;
+  justify-content: space-between; /* Create space between the login form and the cards */
+  align-items: flex-start; /* Align items to the top */
+  flex-direction: row-reverse; /* Display cards on the right side */
   width: 100%;
-  position: relative;
-  z-index: 20;
-  color: #fff; /* White text color for contrast */
+  max-width: 1200px; /* Maximum width for the entire container */
+  margin: 0 auto;
+  text-align: center;
+  gap: 100px;
 }
 
-.text-center {
+/* Login box styling */
+.login-box {
+  background: rgba(0, 0, 0, 0.6); /* Dark background with transparency */
+  backdrop-filter: blur(10px); /* Soft blur effect */
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 450px;                 
+  color: #fff;
+  z-index: 20;
+  margin-right: 5%  ; /* Further increased space between the cards and login form */
+}
+
+/* Card container for LMS features */
+.info-cards {
+  display: flex;
+  justify-content: space-between; /* Create space between cards */
+  margin-top: 40px;
+  width: 100%;
+  flex: 1;
+  gap: 30px; /* Adjust gap between the cards */
+}
+
+/* Card styling */
+.card {
+  background: #34495E; /* Dark background */
+  border-radius: 12px;
+  padding: 30px;
   text-align: center;
-  font-size: 24px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 48%; /* Allow two cards per row with a gap */
+  margin-bottom: 100px; /* Space between cards */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight lift effect on hover */
+  box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+}
+
+
+/* Icon inside the card */
+.card i {
+  font-size: 3rem;
+  color: #1b1d1e;
   margin-bottom: 20px;
 }
 
-input[type="text"],
-input[type="password"] {
-  width: 100%; /* Make input fields stretch to full width */
-  padding: 10px; /* Equal padding for uniform size */
-  margin: 10px 0; /* Consistent margin between fields */
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+/* Card title */
+.card h3 {
+  font-size: 1.5rem;
+  color: #947171;
+  margin-bottom: 10px;
 }
 
-input[type="text"]::placeholder,
-input[type="password"]::placeholder {
-  color: rgba(255, 255, 255, 0.7); /* Placeholder color */
+/* Card description */
+.card p {
+  font-size: 1rem;
+  color: #BDC3C7;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
-  outline: none;
-  background: rgba(255, 255, 255, 0.3); /* Slightly darker background on focus */
-}
-
+/* Button styling */
 .btn-block {
-  width: 100%; /* Button matches input width */
+  width: 100%;
+  padding: 14px;
   margin-top: 20px;
-  padding: 12px; /* Matches input padding */
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #3498db;
   color: white;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 25px;
   font-size: 16px;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-block:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #2980b9;
+  transform: scale(1.05);
 }
 
+/* Register link below the form */
 .register-link {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
   display: block;
-  margin-top: 15px;
-  text-align: center;
+  margin-top: 20px;
 }
 
 .register-link:hover {
   text-decoration: underline;
+  color: #3498db;
 }
 
-/* Background Animation */
-.animated-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(120deg, #1e2a47 0%, #4c5676 100%); /* Soft dark gradient */
-  z-index: 1;
-  overflow: hidden;
-}
-
-.icon {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-  animation: float 10s infinite linear;
-}
-
-.icon:nth-child(1) {
-  top: 20%;
-  left: 10%;
-  animation-duration: 12s;
-}
-
-.icon:nth-child(2) {
-  top: 40%;
-  left: 20%;
-  animation-duration: 14s;
-}
-
-.icon:nth-child(3) {
-  top: 60%;
-  left: 5%;
-  animation-duration: 10s;
-}
-
-.icon:nth-child(4) {
-  top: 80%;
-  left: 30%;
-  animation-duration: 8s;
-}
-
-.icon:nth-child(5) {
-  top: 25%;
-  left: 80%;
-  animation-duration: 15s;
-}
-
-/* Float animation */
-@keyframes float {
-  0% {
-    transform: translateY(0) rotate(0);
-  }
-  50% {
-    transform: translateY(-20px) rotate(45deg);
-  }
-  100% {
-    transform: translateY(0) rotate(360deg);
-  }
-}
-/* Ensure the input field for email aligns directly below the label */
-.login-box .form-group label {
-  font-size: 16px; /* Keep the label size consistent */
-  font-weight: bold;
-  display: block;
-  margin-bottom: 8px; /* Keeps space between label and input field */
-}
-
-/* Adjust input fields to ensure same size and alignment without changing existing styles */
-.login-box .form-control {
-  width: 100%;
-  height: 40px; /* Consistent height */
-  padding: 8px 10px;
+/* Input fields styling */
+input[type="text"], input[type="password"], input[type="email"] {
+  width: 100%; /* Ensure all input fields take the full width */
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
   font-size: 16px;
-  border: 1px solid #ccc;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  margin-bottom: 16px; /* Keeps space between inputs */
-  box-sizing: border-box;
+  transition: background-color 0.3s ease;
 }
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* Label for the inputs */
+.login-box .form-group label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+
+.login-box h2 {
+  color: white;
+}
+
